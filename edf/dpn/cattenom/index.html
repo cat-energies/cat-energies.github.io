@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>CAT-ENERGIES Cattenom</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT Énergies Cattenom - Portail des communications</title>
+<style>
+:root{--navy:#0e1f4a;--blue:#2e6dbf;--green:#379331;--gold:#f5a800;--bg:#f4f8fb;--text:#17324d;--muted:#6b7f92;--line:#dce8ef;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.hero{background:var(--navy);color:#fff;padding:36px 20px 92px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;left:-5%;right:-5%;bottom:-44px;height:90px;background:var(--bg);border-radius:50% 50% 0 0/70% 70% 0 0}.hero-inner,.container{width:min(1120px,calc(100% - 32px));margin:auto}.brand{font-weight:800;font-size:20px;margin-bottom:20px}.hero h1{font-size:clamp(30px,4vw,48px);margin:0 0 12px}.hero p{max-width:760px;line-height:1.6;opacity:.92;margin:0}.container{margin-top:-34px;position:relative;z-index:2;padding-bottom:48px}
+.searchbox,.section,.contact{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 26px rgba(20,63,88,.08)}.searchbox{padding:20px;margin-bottom:24px}.searchbox input{width:100%;padding:15px 16px;border:1px solid #cbdce6;border-radius:13px;font-size:16px}.status{font-size:12px;color:var(--muted);margin-top:8px;text-align:right}
+.section{padding:22px;margin:20px 0}.section h2{margin:0 0 16px;font-size:24px}.pills{display:flex;flex-wrap:wrap;gap:10px}.pill{border:1px solid var(--line);border-radius:999px;background:#fff;padding:10px 14px;font-weight:700;cursor:pointer}.pill[data-cat="Guides pratiques"]{border-color:#b9cff0;color:var(--blue)}.pill[data-cat="Adhésion"]{border-color:#bfdcb9;color:var(--green)}.pill[data-cat="Communiqués"]{border-color:#f1d79c;color:#9a6200}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;display:flex;flex-direction:column;min-height:220px}.card.guides{border-top:5px solid var(--blue)}.card.adhesion{border-top:5px solid var(--green)}.card.communiques{border-top:5px solid var(--gold)}.tag{font-size:12px;font-weight:800;color:var(--muted)}.card h3{margin:12px 0 8px;font-size:19px}.card p{margin:0;color:var(--muted);line-height:1.5;flex:1}.card a{margin-top:16px;display:inline-flex;justify-content:center;text-decoration:none;background:var(--navy);color:#fff;padding:11px 13px;border-radius:10px;font-weight:800}.empty{padding:30px;text-align:center;color:var(--muted);grid-column:1/-1}.contact{padding:22px;background:var(--navy);color:#fff;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}.contact a{color:var(--navy);background:#fff;text-decoration:none;padding:11px 14px;border-radius:10px;font-weight:800}footer{text-align:center;color:var(--muted);padding:10px 20px 32px;font-size:13px}
+@media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.grid{grid-template-columns:1fr}.status{text-align:left}}
+</style>
 </head>
 <body>
-  <h1>CAT-ENERGIES — Cattenom</h1>
-</body>
-</html>
+<header class="hero"><div class="hero-inner"><div class="brand">CAT Énergies - Cattenom</div><h1>Toutes vos communications en un seul endroit</h1><p>Retrouvez les guides, communiqués et informations de la section CAT Énergies Cattenom.</p></div></header>
+<main class="container">
+<section class="searchbox"><input id="search" type="search" placeholder="Rechercher : vacances, logement, adhésion, RSS..."><div id="status" class="status">Chargement des communications...</div></section>
+<section class="section"><h2>Catégories</h2><div id="pills" class="pills"></div></section>
+<section class="section"><h2 id="title">Dernières communications</h2><div id="grid" class="grid"></div></section>
+<section class="contact"><div><strong>Nous contacter</strong><br><span>Une question ou besoin d'un renseignement ?</span></div><a href="mailto:cat-energies-cattenom@edf.fr">cat-energies-cattenom@edf.fr</a></section>
+</main>
+<footer>CAT Énergies Cattenom</footer>
+<script>
+let items=[];const search=document.getElementById('search'),grid=document.getElementById('grid'),pills=document.getElementById('pills'),status=document.getElementById('status'),title=document.getElementById('title');
+const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const cls=c=>c==='Guides pratiques'?'guides':c==='Adhésion'?'adhesion':'communiques';
+function render(list,heading){title.textContent=heading||'Dernières communications';grid.innerHTML=list.length?list.map(i=>`<article class="card ${cls(i.category)}"><div class="tag">${i.category||''}</div><h3>${i.title||''}</h3><p>${i.description||''}</p><a href="${i.url}" target="_blank" rel="noopener">Ouvrir la page</a></article>`).join(''):'<div class="empty">Aucune communication trouvée.</div>'}
+function renderPills(){const cats=[...new Set(items.map(i=>i.category).filter(Boolean))];pills.innerHTML='<button class="pill" data-cat="">Tout afficher</button>'+cats.map(c=>`<button class="pill" data-cat="${c}">${c}</button>`).join('');pills.querySelectorAll('.pill').forEach(b=>b.onclick=()=>{search.value='';const c=b.dataset.cat;render(c?items.filter(i=>i.category===c):items,c||'Toutes les communications')})}
+search.addEventListener('input',()=>{const q=norm(search.value);const list=!q?items:items.filter(i=>norm(`${i.title} ${i.description} ${i.category}`).includes(q));render(list,q?`${list.length} résultat${list.length>1?'s':''}`:'Dernières communications')});
+fetch('communications.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json()}).then(data=>{items=data;status.textContent=`${items.length} communications disponibles`;renderPills();render(items,'Dernières communications')}).catch(()=>{status.textContent='Impossible de charger communications.json';grid.innerHTML='<div class="empty">Erreur de chargement.</div>'});
+</script>
+<script data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body></html>
