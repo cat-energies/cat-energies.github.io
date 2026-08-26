@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CAT Énergies Cattenom — Tarif Agent & mobilisation</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}iframe{display:block;width:100%;height:100%;border:0}</style>
+</head>
+<body>
+<iframe id="communique" src="09%20-%2015%20sept%20_%20tarif%20agent%20-%20contenu.html?v=20260826-0909" title="CAT Énergies Cattenom — Tarif Agent & mobilisation"></iframe>
+<script>
+(function(){
+  const frame=document.getElementById('communique');
+  frame.addEventListener('load',function(){
+    try{
+      const doc=frame.contentDocument||frame.contentWindow.document;
+      doc.querySelectorAll('a').forEach(function(a){
+        const href=a.getAttribute('href')||'';
+        if(href.indexOf('modalites-greve-PGI-GTA-Cattenom.pdf')!==-1){
+          a.setAttribute('href','modalites-greve-PGI-GTA-Cattenom.pdf?v=20260826-0844');
+          a.setAttribute('target','_blank');
+          a.setAttribute('rel','noopener');
+        }
+      });
+      const page=doc.querySelector('.page'); if(page){page.style.overflow='visible';}
+      const nav=doc.querySelector('.nav');
+      if(nav){nav.style.setProperty('position','sticky','important');nav.style.setProperty('top','0','important');nav.style.setProperty('z-index','99999','important');nav.style.setProperty('background','#fff','important');nav.style.setProperty('box-shadow','0 8px 22px rgba(23,59,104,.16)','important');nav.style.setProperty('transform','translateZ(0)','important');}
+      const style=doc.createElement('style');
+      style.textContent='html,body{overflow-x:visible!important}.page{overflow:visible!important}.nav{position:-webkit-sticky!important;position:sticky!important;top:0!important;z-index:99999!important;background:#fff!important;box-shadow:0 8px 22px rgba(23,59,104,.16)!important;}';
+      doc.head.appendChild(style);
+    }catch(e){console.warn('Mise à jour de la navigation impossible',e);}
+  });
+})();
+</script>
+<script data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
