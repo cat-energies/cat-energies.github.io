@@ -29,3 +29,4 @@ jobs:
             git commit -m 'Reprendre strictement le portail Cattenom historique'
             git push
           fi
+# trigger sync
