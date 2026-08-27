@@ -1,0 +1,40 @@
+name: Rename EDF labels
+on:
+  push:
+    paths:
+      - '.github/workflows/rename-edf-labels.yml'
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update visible EDF labels only
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('edf/index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              '<title>Portail des communications - CAT Énergies EDF</title>': '<title>Portail des communications - CAT Énergies EDF SA</title>',
+              'CAT Énergies — EDF': 'CAT Énergies — EDF SA',
+              'Portail des communications EDF': 'Portail des communications EDF SA',
+              'Communications EDF': 'Communications EDF SA',
+              'périmètre EDF': 'périmètre EDF SA',
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add edf/index.html
+          if git diff --cached --quiet; then
+            echo 'No changes needed.'
+            exit 0
+          fi
+          git commit -m 'Afficher EDF SA sur le portail EDF'
+          git push
