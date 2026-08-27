@@ -1,0 +1,35 @@
+name: Fix EDF portal contact
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-edf-contact.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update EDF contact button
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('edf/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '''<a class="contact-link" href="mailto:cat-energies-cattenom@edf.fr">
+      ✉ cat-energies-cattenom@edf.fr
+    </a>'''
+          new = '''<a class="contact-link" href="mailto:sebastien.jouffret@edf.fr">
+      ✉ Contact
+    </a>'''
+          if old not in s:
+              raise SystemExit('Ancien bloc contact introuvable')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add edf/index.html
+          git commit -m 'Mettre à jour le contact du portail EDF'
+          git push
