@@ -10,29 +10,22 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Retirer FR dans le badge national
+      - name: Retirer le drapeau FR du badge national
         run: |
           python - <<'PY'
           from pathlib import Path
-          import re
           p=Path("edf/guides/2026 - Guide_Rentree_2026_CAT_Energies_EDF_SA.html")
           s=p.read_text(encoding="utf-8")
-          old=s
-          # Cas 1 : FR en texte simple au début du badge
-          s=re.sub(r'(<[^>]*class=["\'][^"\']*national-scope-badge[^"\']*["\'][^>]*>)\s*FR\s*', r'\1', s, count=1, flags=re.I)
-          # Cas 2 : FR contenu dans un span/em/strong au début du badge
-          s=re.sub(r'(<[^>]*class=["\'][^"\']*national-scope-badge[^"\']*["\'][^>]*>)\s*<(span|em|strong)[^>]*>\s*FR\s*</\2>\s*', r'\1', s, count=1, flags=re.I)
-          if s == old:
-              # Diagnostic ciblé pour éviter toute modification hasardeuse
-              for m in re.finditer(r'national-scope-badge', s):
-                  print(repr(s[max(0,m.start()-150):m.start()+400]))
-              raise SystemExit("FR non trouve dans le badge")
-          p.write_text(s, encoding="utf-8")
+          old='<div class="national-scope-badge">🇫🇷 Périmètre national · EDF SA</div>'
+          new='<div class="national-scope-badge">Périmètre national · EDF SA</div>'
+          if old not in s:
+              raise SystemExit("Badge cible non trouve")
+          p.write_text(s.replace(old,new,1), encoding="utf-8")
           PY
       - name: Commit
         run: |
           git config user.name "cat-energies-cattenom"
           git config user.email "cat-energies-cattenom@edf.fr"
           git add "edf/guides/2026 - Guide_Rentree_2026_CAT_Energies_EDF_SA.html"
-          git commit -m "Retirer FR du badge perimetre national du guide EDF SA"
+          git commit -m "Retirer le drapeau FR du badge du guide EDF SA"
           git push
