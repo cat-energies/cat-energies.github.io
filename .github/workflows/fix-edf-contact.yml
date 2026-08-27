@@ -14,17 +14,14 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p = Path('edf/index.html')
           s = p.read_text(encoding='utf-8')
-          old = '''<a class="contact-link" href="mailto:cat-energies-cattenom@edf.fr">
-      ✉ cat-energies-cattenom@edf.fr
-    </a>'''
-          new = '''<a class="contact-link" href="mailto:sebastien.jouffret@edf.fr">
-      ✉ Contact
-    </a>'''
-          if old not in s:
-              raise SystemExit('Ancien bloc contact introuvable')
-          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          s2, n1 = re.subn(r'href="mailto:cat-energies-cattenom@edf\.fr"', 'href="mailto:sebastien.jouffret@edf.fr"', s, count=1)
+          s3, n2 = re.subn(r'>\s*✉\s*cat-energies-cattenom@edf\.fr\s*</a>', '>\n      ✉ Contact\n    </a>', s2, count=1)
+          if n1 != 1 or n2 != 1:
+              raise SystemExit(f'Replacement mismatch: mailto={n1}, label={n2}')
+          p.write_text(s3, encoding='utf-8')
           PY
       - name: Commit
         run: |
