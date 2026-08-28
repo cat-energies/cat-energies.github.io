@@ -1,0 +1,34 @@
+name: Ajouter GoatCounter fiche Temps choisi
+on:
+  push:
+    paths:
+      - '.github/workflows/add-goatcounter-fiche-temps-choisi.yml'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ajouter GoatCounter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('edf/fiches-pratiques/Fiche pratique - Temps Choisi.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count"'
+          if marker not in s:
+              script = '\n<script data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count"\n        async src="//gc.zgo.at/count.js"></script>\n'
+              if '</body>' in s:
+                  s = s.replace('</body>', script + '</body>', 1)
+              else:
+                  s += script
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "cat-energies-cattenom"
+          git config user.email "cat-energies-cattenom@edf.fr"
+          git add "edf/fiches-pratiques/Fiche pratique - Temps Choisi.html"
+          git commit -m "Ajouter GoatCounter à la fiche Temps choisi" || exit 0
+          git push
