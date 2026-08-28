@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '_tools/update_portals.py'
+      - '.github/workflows/portails-sans-doublons.yml'
 jobs:
   update:
     runs-on: ubuntu-latest
