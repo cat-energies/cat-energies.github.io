@@ -1,0 +1,81 @@
+name: Ajouter fiche pratique aux portails
+on:
+  push:
+    paths:
+      - '.github/workflows/add-fiche-pratique-portails.yml'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mettre a jour les portails
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          src = Path('edf/dpn/cattenom/fiches-pratiques/Fiche pratique - Temps Choisi.html')
+          if not src.exists():
+              raise SystemExit('Fiche pratique source introuvable')
+
+          # La fiche est de portée EDF SA : on la rend disponible aussi sous EDF.
+          dst_dir = Path('edf/fiches-pratiques')
+          dst_dir.mkdir(parents=True, exist_ok=True)
+          dst = dst_dir / src.name
+          dst.write_bytes(src.read_bytes())
+
+          def upsert_json(path, entry):
+              p = Path(path)
+              data = json.loads(p.read_text(encoding='utf-8'))
+              data = [x for x in data if x.get('title') != entry['title']]
+              data.insert(0, entry)
+              p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          edf_entry = {
+              'title': 'Temps choisi & temps partiel',
+              'description': 'Fiche pratique sur le temps choisi et le temps partiel.',
+              'category': 'Fiches pratiques',
+              'status': 'En ligne',
+              'date': '27/08/2026',
+              'url': 'https://cat-energies.github.io/edf/fiches-pratiques/Fiche%20pratique%20-%20Temps%20Choisi.html',
+              'created': '2026-08-27',
+              'updated': '2026-08-28'
+          }
+          cat_entry = {
+              'title': 'Temps choisi & temps partiel',
+              'description': 'Fiche pratique sur le temps choisi et le temps partiel.',
+              'category': 'Fiches pratiques',
+              'status': 'En ligne',
+              'date': '27/08/2026',
+              'url': 'https://cat-energies.github.io/edf/dpn/cattenom/fiches-pratiques/Fiche%20pratique%20-%20Temps%20Choisi.html',
+              'created': '2026-08-27',
+              'updated': '2026-08-28'
+          }
+          upsert_json('edf/communications.json', edf_entry)
+          upsert_json('edf/dpn/cattenom/communications.json', cat_entry)
+
+          # Ajoute une identité visuelle dédiée à la nouvelle catégorie sur les deux portails.
+          for portal in [Path('edf/index.html'), Path('edf/dpn/cattenom/index.html')]:
+              s = portal.read_text(encoding='utf-8')
+              additions = []
+              if '.type-fiches-pratiques{' not in s:
+                  additions.append('\n  .type-fiches-pratiques{border-top:5px solid #0b8f8f;background:linear-gradient(180deg,#f3ffff,#ffffff)}\n')
+              if '.category.type-pill-fiches-pratiques{' not in s:
+                  additions.append('  .category.type-pill-fiches-pratiques{background:#e5f6f6;color:#087070}\n')
+              if '.category-pill-btn[data-cat="Fiches pratiques"]' not in s:
+                  additions.append('  .category-pill-btn[data-cat="Fiches pratiques"]{border-color:#b6dddd;color:#0b7d7d;background:#f5ffff}\n')
+              if '.category-tile[data-cat="Fiches pratiques"]' not in s:
+                  additions.append('  .category-tile[data-cat="Fiches pratiques"]{border-top:5px solid #0b8f8f}\n')
+              if additions:
+                  s = s.replace('</style>', ''.join(additions) + '\n</style>', 1)
+                  portal.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "cat-energies-cattenom"
+          git config user.email "cat-energies-cattenom@edf.fr"
+          git add edf/communications.json edf/dpn/cattenom/communications.json edf/fiches-pratiques edf/index.html edf/dpn/cattenom/index.html
+          git commit -m "Ajouter la fiche pratique Temps choisi aux portails EDF SA et Cattenom"
+          git push
