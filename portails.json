@@ -1,0 +1,17 @@
+[
+  {
+    "name": "EDF SA",
+    "scope": "EDF SA",
+    "level": "Entreprise",
+    "url": "/edf/",
+    "communications": "/edf/communications.json"
+  },
+  {
+    "name": "Cattenom",
+    "scope": "Cattenom",
+    "level": "Site",
+    "parent": "DPN",
+    "url": "/edf/dpn/cattenom/",
+    "communications": "/edf/dpn/cattenom/communications.json"
+  }
+]

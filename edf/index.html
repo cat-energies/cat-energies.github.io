@@ -622,6 +622,14 @@
   .category-pill-btn[data-cat="Fiches pratiques"]{border-color:#b6dddd;color:#0b7d7d;background:#f5ffff}
   .category-tile[data-cat="Fiches pratiques"]{border-top:5px solid #0b8f8f}
 
+
+  .scope-switcher{margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px rgba(31,72,94,.06);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .scope-switcher strong{display:block;color:var(--primary-dark);margin-bottom:4px}
+  .scope-switcher span{font-size:13px;color:var(--muted)}
+  .scope-switcher select{width:auto;min-width:220px}
+  .scope-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#eef1f3;color:#596874;font-size:11px;font-weight:800}
+  @media(max-width:620px){.scope-switcher select{width:100%}}
+
 </style>
 </head>
 <body>
@@ -652,6 +660,11 @@
 
 
 <main class="container">
+  <section class="scope-switcher" aria-label="Changer de périmètre">
+    <div><strong>Changer de périmètre</strong><span>Accédez aux autres portails CAT Énergies sans dupliquer les contenus.</span></div>
+    <select id="scopeSelect" aria-label="Choisir un périmètre"><option value="">Choisir un portail…</option></select>
+  </section>
+
 
   <section class="welcome-panel">
     <div class="welcome-copy">
@@ -724,6 +737,7 @@
 
 <script>
 let communications = [];
+let globalCommunications = [];
 let activeCategory = "";
 
 const cards = document.getElementById("cards");
@@ -802,12 +816,11 @@ async function indexOnePage(item){
 }
 
 async function indexPageContents(){
-  if(searchIndexStatus) searchIndexStatus.textContent = "Indexation du contenu des pages…";
-  const results = await Promise.allSettled(communications.map(indexOnePage));
+  if(searchIndexStatus) searchIndexStatus.textContent = "Indexation de la recherche transversale…";
+  const pool = globalCommunications.length ? globalCommunications : communications;
+  const results = await Promise.allSettled(pool.map(indexOnePage));
   const ok = results.filter(r => r.status === "fulfilled" && r.value === true).length;
-  if(searchIndexStatus){
-    searchIndexStatus.textContent = `${ok}/${communications.length} pages indexées pour la recherche`;
-  }
+  if(searchIndexStatus){ searchIndexStatus.textContent = ok + "/" + pool.length + " pages indexées tous périmètres confondus"; }
   if(search.value.trim()) showResults();
 }
 
@@ -869,12 +882,10 @@ function showResults(){
   const rawQuery = search.value.trim();
   const q = normalizeSearchText(rawQuery);
 
-  let filtered = communications.filter(item => {
-    const haystack = item._searchText || normalizeSearchText(
-      `${item.title} ${item.description} ${item.category}`
-    );
-    return (!q || haystack.includes(q)) &&
-           (!activeCategory || item.category === activeCategory);
+  const sourceItems = q ? (globalCommunications.length ? globalCommunications : communications) : communications;
+  let filtered = sourceItems.filter(item => {
+    const haystack = item._searchText || normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||""));
+    return (!q || haystack.includes(q)) && (!activeCategory || item.category === activeCategory);
   });
 
   filtered = sortItems(filtered);
@@ -903,6 +914,7 @@ function showResults(){
         <div class="search-result-main">
           <div class="search-result-top">
             <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+            <span class="scope-badge">${escapeHtml(item.scope || "Périmètre non précisé")}</span>
             <h3>${escapeHtml(item.title)}</h3>
           </div>
           <p>${escapeHtml(item.description || "")}</p>
@@ -936,16 +948,38 @@ async function loadCommunications(){
   try{
     const response = await fetch("communications.json", { cache: "no-store" });
     if(!response.ok) throw new Error("HTTP " + response.status);
-
     communications = await response.json();
-
-    communications.forEach(item => {
-      item._searchText = normalizeSearchText(
-        `${item.title || ""} ${item.description || ""} ${item.category || ""}`
-      );
+    const registryResponse = await fetch("/portails.json", { cache: "no-store" });
+    const registry = registryResponse.ok ? await registryResponse.json() : [];
+    const scopeSelect = document.getElementById("scopeSelect");
+    if(scopeSelect){
+      registry.forEach(portal => {
+        const option = document.createElement("option");
+        option.value = portal.url;
+        option.textContent = portal.parent ? (portal.parent + " · " + portal.name) : portal.name;
+        scopeSelect.appendChild(option);
+      });
+      scopeSelect.addEventListener("change", () => { if(scopeSelect.value) window.location.href = scopeSelect.value; });
+    }
+    const globalLoaded = [];
+    for(const portal of registry){
+      try{
+        const r = await fetch(portal.communications, { cache: "no-store" });
+        if(!r.ok) continue;
+        const items = await r.json();
+        items.forEach(item => globalLoaded.push({ ...item, scope: item.scope || portal.scope }));
+      }catch(error){ console.info("Portail non indexé", portal.name, error); }
+    }
+    const seen = new Set();
+    globalCommunications = globalLoaded.filter(item => {
+      const key = item.url || ((item.scope || "") + "|" + (item.title || ""));
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
-
-    totalCount.textContent = `${communications.length} communication${communications.length > 1 ? "s" : ""}`;
+    communications.forEach(item => { item._searchText = normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||"")); });
+    globalCommunications.forEach(item => { item._searchText = normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||"")); });
+    totalCount.textContent = communications.length + " communication" + (communications.length > 1 ? "s" : "");
     renderCategories();
     renderLatest();
     indexPageContents();
