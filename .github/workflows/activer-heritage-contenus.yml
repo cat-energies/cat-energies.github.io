@@ -1,0 +1,93 @@
+name: Activer héritage contenus
+on:
+  push:
+    paths:
+      - '.github/workflows/activer-heritage-contenus.yml'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Activer héritage EDF SA DPN Cattenom
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          # 1) Le JSON local Cattenom ne conserve que les contenus réellement locaux.
+          json_path = Path('edf/dpn/cattenom/communications.json')
+          data = json.loads(json_path.read_text(encoding='utf-8'))
+          data = [x for x in data if not (x.get('title') == 'Temps choisi & temps partiel' and x.get('scope') == 'EDF SA')]
+          for item in data:
+              item.setdefault('scope', 'Cattenom')
+          json_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # 2) Le portail Cattenom charge automatiquement son niveau + DPN + EDF SA.
+          portal = Path('edf/dpn/cattenom/index.html')
+          s = portal.read_text(encoding='utf-8')
+          start = s.index('async function loadCommunications(){')
+          end = s.index('\nsearch.addEventListener("input"', start)
+          new_func = r'''async function loadCommunications(){
+  try{
+    const sources = [
+      { url: "communications.json", scope: "Cattenom", required: true },
+      { url: "../communications.json", scope: "DPN", required: false },
+      { url: "../../communications.json", scope: "EDF SA", required: false }
+    ];
+
+    const loaded = [];
+    for(const source of sources){
+      try{
+        const response = await fetch(source.url, { cache: "no-store" });
+        if(!response.ok){
+          if(source.required) throw new Error("HTTP " + response.status);
+          continue;
+        }
+        const items = await response.json();
+        items.forEach(item => loaded.push({
+          ...item,
+          scope: item.scope || source.scope
+        }));
+      }catch(error){
+        if(source.required) throw error;
+        console.info(`Périmètre ${source.scope} non disponible pour le moment.`, error);
+      }
+    }
+
+    const seen = new Set();
+    communications = loaded.filter(item => {
+      const key = item.url || `${item.scope}|${item.title}`;
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    communications.forEach(item => {
+      item._searchText = normalizeSearchText(
+        `${item.title || ""} ${item.description || ""} ${item.category || ""} ${item.scope || ""}`
+      );
+    });
+
+    totalCount.textContent = `${communications.length} communication${communications.length > 1 ? "s" : ""}`;
+    renderCategories();
+    renderLatest();
+    indexPageContents();
+  }catch(error){
+    console.error(error);
+    latestGrid.innerHTML = '<div class="empty error">Impossible de charger les communications.</div>';
+    if(searchIndexStatus) searchIndexStatus.textContent = "Erreur de chargement";
+  }
+}
+'''
+          s = s[:start] + new_func + s[end:]
+          portal.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "cat-energies-cattenom"
+          git config user.email "cat-energies-cattenom@edf.fr"
+          git add edf/dpn/cattenom/communications.json edf/dpn/cattenom/index.html
+          git commit -m "Activer héritage automatique EDF SA DPN Cattenom"
+          git push
