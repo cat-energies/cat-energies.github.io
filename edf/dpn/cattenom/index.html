@@ -934,15 +934,38 @@ function showResults(){
 
 async function loadCommunications(){
   try{
-    const response = await fetch("communications.json", { cache: "no-store" });
-    if(!response.ok) throw new Error("HTTP " + response.status);
+    const sources = [
+      { url: "communications.json", scope: "Cattenom", required: true },
+      { url: "../communications.json", scope: "DPN", required: false },
+      { url: "../../communications.json", scope: "EDF SA", required: false }
+    ];
 
-    communications = await response.json();
+    const loaded = [];
+    for(const source of sources){
+      try{
+        const response = await fetch(source.url, { cache: "no-store" });
+        if(!response.ok){
+          if(source.required) throw new Error("HTTP " + response.status);
+          continue;
+        }
+        const items = await response.json();
+        items.forEach(item => loaded.push({ ...item, scope: item.scope || source.scope }));
+      }catch(error){
+        if(source.required) throw error;
+        console.info("Perimetre " + source.scope + " non disponible pour le moment.", error);
+      }
+    }
+
+    const seen = new Set();
+    communications = loaded.filter(item => {
+      const key = item.url || ((item.scope || "") + "|" + (item.title || ""));
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 
     communications.forEach(item => {
-      item._searchText = normalizeSearchText(
-        `${item.title || ""} ${item.description || ""} ${item.category || ""}`
-      );
+      item._searchText = normalizeSearchText(`${item.title || ""} ${item.description || ""} ${item.category || ""} ${item.scope || ""}`);
     });
 
     totalCount.textContent = `${communications.length} communication${communications.length > 1 ? "s" : ""}`;
@@ -951,7 +974,7 @@ async function loadCommunications(){
     indexPageContents();
   }catch(error){
     console.error(error);
-    latestGrid.innerHTML = '<div class="empty error">Impossible de charger communications.json.</div>';
+    latestGrid.innerHTML = '<div class="empty error">Impossible de charger les communications.</div>';
     if(searchIndexStatus) searchIndexStatus.textContent = "Erreur de chargement";
   }
 }

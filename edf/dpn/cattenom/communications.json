@@ -1,16 +1,5 @@
 [
   {
-    "title": "Temps choisi & temps partiel",
-    "description": "Fiche pratique sur le temps choisi et le temps partiel.",
-    "category": "Fiches pratiques",
-    "scope": "EDF SA",
-    "status": "En ligne",
-    "date": "27/08/2026",
-    "url": "https://cat-energies.github.io/edf/fiches-pratiques/Fiche%20pratique%20-%20Temps%20Choisi.html",
-    "created": "2026-08-27",
-    "updated": "2026-08-28"
-  },
-  {
     "title": "Origines CAT Energies",
     "description": "Découvrez les origines et l’histoire de CAT Énergies.",
     "category": "Communiqués",
@@ -18,7 +7,8 @@
     "date": "26/08/2026",
     "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20Origines%20CAT%20Energies.html",
     "created": "2026-08-26",
-    "updated": "2026-08-26"
+    "updated": "2026-08-26",
+    "scope": "Cattenom"
   },
   {
     "title": "Tarif Agent, AG et mobilisation du 15 septembre",
@@ -28,7 +18,8 @@
     "date": "26/08/2026",
     "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%2015%20sept%20_%20tarif%20agent.html",
     "created": "2026-08-26",
-    "updated": "2026-08-26"
+    "updated": "2026-08-26",
+    "scope": "Cattenom"
   },
   {
     "title": "Guide de la rentrée 2026",
@@ -38,7 +29,8 @@
     "date": "26/08/2026",
     "url": "https://cat-energies.github.io/edf/dpn/cattenom/guides/Guide%20de%20la%20rentr%C3%A9e%20-%202026.html",
     "created": "2026-08-26",
-    "updated": "2026-08-26"
+    "updated": "2026-08-26",
+    "scope": "Cattenom"
   },
   {
     "title": "Adhésion",
@@ -48,7 +40,8 @@
     "date": "26/08/2026",
     "url": "https://cat-energies.github.io/edf/dpn/cattenom/adhesion/Bulletin%20d'adh%C3%A9sion_Cattenom.html",
     "created": "2026-08-26",
-    "updated": "2026-08-26"
+    "updated": "2026-08-26",
+    "scope": "Cattenom"
   },
   {
     "title": "RSS vs DS",
@@ -58,6 +51,7 @@
     "date": "26/08/2026",
     "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/08%20-%20Pr%C3%A9sentation%20de%20la%20section%20CAT_Energies_Cattenom.html",
     "created": "2026-08-26",
-    "updated": "2026-08-26"
+    "updated": "2026-08-26",
+    "scope": "Cattenom"
   }
 ]
