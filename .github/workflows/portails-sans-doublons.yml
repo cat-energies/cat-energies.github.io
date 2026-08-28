@@ -1,0 +1,195 @@
+name: Portails sans doublons
+on:
+  push:
+    paths:
+      - '.github/workflows/portails-sans-doublons.yml'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mettre a jour les portails
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          # Referentiel central des portails. Il suffira d'ajouter ici les futurs perimetres.
+          portals = [
+              {
+                  'name': 'EDF SA',
+                  'scope': 'EDF SA',
+                  'level': 'Entreprise',
+                  'url': '/edf/',
+                  'communications': '/edf/communications.json'
+              },
+              {
+                  'name': 'Cattenom',
+                  'scope': 'Cattenom',
+                  'level': 'Site',
+                  'parent': 'DPN',
+                  'url': '/edf/dpn/cattenom/',
+                  'communications': '/edf/dpn/cattenom/communications.json'
+              }
+          ]
+          Path('portails.json').write_text(json.dumps(portals, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # Le JSON Cattenom ne contient que des contenus Cattenom.
+          cat_json = Path('edf/dpn/cattenom/communications.json')
+          cat_data = json.loads(cat_json.read_text(encoding='utf-8'))
+          cat_data = [x for x in cat_data if (x.get('scope') in (None, '', 'Cattenom'))]
+          for x in cat_data:
+              x['scope'] = 'Cattenom'
+          cat_json.write_text(json.dumps(cat_data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # Le JSON EDF ne contient que des contenus EDF SA.
+          edf_json = Path('edf/communications.json')
+          edf_data = json.loads(edf_json.read_text(encoding='utf-8'))
+          for x in edf_data:
+              x['scope'] = 'EDF SA'
+          edf_json.write_text(json.dumps(edf_data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          nav_html = '''\n  <section class="scope-switcher" aria-label="Changer de périmètre">\n    <div>\n      <strong>Changer de périmètre</strong>\n      <span>Accédez aux autres portails CAT Énergies sans dupliquer les contenus.</span>\n    </div>\n    <select id="scopeSelect" aria-label="Choisir un périmètre">\n      <option value="">Choisir un portail…</option>\n    </select>\n  </section>\n'''
+
+          nav_css = '''\n  .scope-switcher{margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px rgba(31,72,94,.06);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}\n  .scope-switcher strong{display:block;color:var(--primary-dark);margin-bottom:4px}\n  .scope-switcher span{font-size:13px;color:var(--muted)}\n  .scope-switcher select{width:auto;min-width:220px}\n  .scope-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#eef1f3;color:#596874;font-size:11px;font-weight:800}\n  @media(max-width:620px){.scope-switcher select{width:100%}}\n'''
+
+          new_load = '''async function loadCommunications(){
+  try{
+    const response = await fetch("communications.json", { cache: "no-store" });
+    if(!response.ok) throw new Error("HTTP " + response.status);
+    communications = await response.json();
+
+    const registryResponse = await fetch("/portails.json", { cache: "no-store" });
+    const registry = registryResponse.ok ? await registryResponse.json() : [];
+
+    const scopeSelect = document.getElementById("scopeSelect");
+    if(scopeSelect){
+      registry.forEach(portal => {
+        const option = document.createElement("option");
+        option.value = portal.url;
+        option.textContent = portal.parent ? `${portal.parent} · ${portal.name}` : portal.name;
+        scopeSelect.appendChild(option);
+      });
+      scopeSelect.addEventListener("change", () => {
+        if(scopeSelect.value) window.location.href = scopeSelect.value;
+      });
+    }
+
+    const globalLoaded = [];
+    for(const portal of registry){
+      try{
+        const r = await fetch(portal.communications, { cache: "no-store" });
+        if(!r.ok) continue;
+        const items = await r.json();
+        items.forEach(item => globalLoaded.push({ ...item, scope: item.scope || portal.scope }));
+      }catch(error){
+        console.info("Portail non indexé :", portal.name, error);
+      }
+    }
+
+    const seen = new Set();
+    globalCommunications = globalLoaded.filter(item => {
+      const key = item.url || `${item.scope}|${item.title}`;
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    communications.forEach(item => {
+      item._searchText = normalizeSearchText(`${item.title || ""} ${item.description || ""} ${item.category || ""} ${item.scope || ""}`);
+    });
+    globalCommunications.forEach(item => {
+      item._searchText = normalizeSearchText(`${item.title || ""} ${item.description || ""} ${item.category || ""} ${item.scope || ""}`);
+    });
+
+    totalCount.textContent = `${communications.length} communication${communications.length > 1 ? "s" : ""}`;
+    renderCategories();
+    renderLatest();
+    indexPageContents();
+  }catch(error){
+    console.error(error);
+    latestGrid.innerHTML = '<div class="empty error">Impossible de charger communications.json.</div>';
+    if(searchIndexStatus) searchIndexStatus.textContent = "Erreur de chargement";
+  }
+}
+'''
+
+          for portal_path in [Path('edf/index.html'), Path('edf/dpn/cattenom/index.html')]:
+              s = portal_path.read_text(encoding='utf-8')
+
+              if '.scope-switcher{' not in s:
+                  s = s.replace('</style>', nav_css + '\n</style>', 1)
+
+              if 'id="scopeSelect"' not in s:
+                  s = s.replace('<main class="container">', '<main class="container">' + nav_html, 1)
+
+              if 'let globalCommunications = [];' not in s:
+                  s = s.replace('let communications = [];\n', 'let communications = [];\nlet globalCommunications = [];\n', 1)
+
+              # Indexation transversale pour la recherche, mais catalogue local pour les cartes/categories.
+              old_index = '''async function indexPageContents(){
+  if(searchIndexStatus) searchIndexStatus.textContent = "Indexation du contenu des pages…";
+  const results = await Promise.allSettled(communications.map(indexOnePage));
+  const ok = results.filter(r => r.status === "fulfilled" && r.value === true).length;
+  if(searchIndexStatus){
+    searchIndexStatus.textContent = `${ok}/${communications.length} pages indexées pour la recherche`;
+  }
+  if(search.value.trim()) showResults();
+}
+'''
+              new_index = '''async function indexPageContents(){
+  if(searchIndexStatus) searchIndexStatus.textContent = "Indexation de la recherche transversale…";
+  const pool = globalCommunications.length ? globalCommunications : communications;
+  const results = await Promise.allSettled(pool.map(indexOnePage));
+  const ok = results.filter(r => r.status === "fulfilled" && r.value === true).length;
+  if(searchIndexStatus){
+    searchIndexStatus.textContent = `${ok}/${pool.length} pages indexées tous périmètres confondus`;
+  }
+  if(search.value.trim()) showResults();
+}
+'''
+              if old_index in s:
+                  s = s.replace(old_index, new_index, 1)
+
+              # En recherche texte seulement, on utilise le référentiel transversal. Sans recherche, uniquement le portail local.
+              old_filter = '''  let filtered = communications.filter(item => {
+    const haystack = item._searchText || normalizeSearchText(
+      `${item.title} ${item.description} ${item.category}`
+    );
+    return (!q || haystack.includes(q)) &&
+           (!activeCategory || item.category === activeCategory);
+  });'''
+              new_filter = '''  const sourceItems = q ? (globalCommunications.length ? globalCommunications : communications) : communications;
+  let filtered = sourceItems.filter(item => {
+    const haystack = item._searchText || normalizeSearchText(
+      `${item.title} ${item.description} ${item.category} ${item.scope || ""}`
+    );
+    return (!q || haystack.includes(q)) &&
+           (!activeCategory || item.category === activeCategory);
+  });'''
+              if old_filter in s:
+                  s = s.replace(old_filter, new_filter, 1)
+
+              old_search_card = '''            <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+            <h3>${escapeHtml(item.title)}</h3>'''
+              new_search_card = '''            <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+            <span class="scope-badge">${escapeHtml(item.scope || "Périmètre non précisé")}</span>
+            <h3>${escapeHtml(item.title)}</h3>'''
+              if old_search_card in s:
+                  s = s.replace(old_search_card, new_search_card, 1)
+
+              start = s.index('async function loadCommunications(){')
+              end = s.index('\nsearch.addEventListener("input"', start)
+              s = s[:start] + new_load + s[end:]
+
+              portal_path.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "cat-energies-cattenom"
+          git config user.email "cat-energies-cattenom@edf.fr"
+          git add portails.json edf/communications.json edf/dpn/cattenom/communications.json edf/index.html edf/dpn/cattenom/index.html
+          git commit -m "Supprimer héritage visuel et ajouter navigation par périmètre"
+          git push
