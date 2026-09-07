@@ -13,7 +13,7 @@ window.CAT_CONFIG = Object.freeze({
       phoneDisplay: "06 31 72 69 12",
       phoneHref: "+33631726912",
       email: "aurelie-a.andre@edf.fr",
-      avatarUrl: "https://cat-energies.github.io/assets/cat-energies/avatars/aurelie-andre.png"
+      avatarUrl: null
     },
     cedric: {
       name: "Cédric BANZET",
@@ -21,8 +21,12 @@ window.CAT_CONFIG = Object.freeze({
       phoneDisplay: "06 47 40 08 54",
       phoneHref: "+33647400854",
       email: "cedric.banzet@edf.fr",
-      avatarUrl: "https://cat-energies.github.io/assets/cat-energies/avatars/cedric-banzet.png"
+      avatarUrl: null
     }
+  },
+  avatarPolicy: {
+    status: "reference-retrieved-not-centralized",
+    note: "Utiliser les avatars officiels Aurélie et Cédric déjà validés. Ne pas remplacer par des portraits génériques."
   },
   goatCounter: {
     slug: "cat-energies-cattenom",
