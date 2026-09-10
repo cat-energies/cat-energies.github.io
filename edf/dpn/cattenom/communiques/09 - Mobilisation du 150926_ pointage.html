@@ -399,6 +399,140 @@ h1{color:white;font-size:clamp(42px,6.4vw,72px);text-shadow:0 4px 20px rgba(0,0,
   .pgi-guide-cta{flex-direction:column;align-items:stretch}
   .pgi-guide-button{width:100%;white-space:normal;text-align:center}
 }
+
+.union-note{
+  margin-top:14px !important;
+  padding-top:12px;
+  border-top:1px solid rgba(23,59,104,.12);
+  color:#5b6d7d;
+  font-size:.9rem;
+  line-height:1.5;
+  font-style:italic;
+}
+
+/* V12 — message unité syndicale réellement visible */
+.union-callout{
+  position:relative;
+  margin:22px 0 18px;
+  padding:20px 24px 20px 28px;
+  border-radius:16px;
+  border:1px solid rgba(23,59,104,.14);
+  background:#f4f8fb;
+  box-shadow:0 8px 20px rgba(23,59,104,.06);
+  overflow:hidden;
+}
+.union-callout:before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:7px;
+  background:var(--yellow);
+}
+.union-callout-title{
+  margin:0 0 7px;
+  color:var(--ink);
+  font-size:1.08rem;
+  line-height:1.25;
+  font-weight:900;
+}
+.union-callout p{
+  margin:0 !important;
+  color:#3f5365 !important;
+  font-size:.96rem !important;
+  line-height:1.5 !important;
+  font-style:normal !important;
+}
+@media(max-width:700px){
+  .union-callout{padding:18px 18px 18px 22px}
+}
+
+.report-cta{
+  display:flex;
+  justify-content:center;
+  margin-top:24px;
+}
+.report-cta .button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+/* V14 — synthèse des recommandations */
+.reco-summary{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.reco-summary-card{
+  padding:18px 20px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 7px 18px rgba(23,59,104,.05);
+}
+.reco-summary-card h3{
+  margin:0 0 7px;
+  color:var(--ink);
+  font-size:1rem;
+  line-height:1.25;
+}
+.reco-summary-card p{
+  margin:0;
+  font-size:.91rem;
+  line-height:1.45;
+}
+.reco-summary-note{
+  margin-top:14px;
+  padding:13px 16px;
+  border-left:5px solid var(--yellow);
+  border-radius:10px;
+  background:#fff8e8;
+  font-size:.9rem;
+  line-height:1.45;
+}
+@media(max-width:760px){
+  .reco-summary{grid-template-columns:1fr}
+}
+
+/* V16 — positionnement CAT Énergies */
+.union-callout-opening{
+  margin-top:22px;
+  margin-bottom:26px;
+}
+.union-closing{
+  max-width:1180px;
+  margin:8px auto 24px;
+  padding:14px 20px;
+  text-align:center;
+  color:var(--ink);
+  font-weight:800;
+  font-size:.96rem;
+  line-height:1.4;
+}
+@media(max-width:700px){
+  .union-closing{margin:6px 16px 20px;}
+}
+
+/* V17 — hiérarchie éditoriale */
+.union-callout-mid{
+  margin:26px 0;
+}
+
+/* V18 — unité syndicale sous les deux tuiles principales */
+.union-callout-under-tiles{
+  margin:18px 0 4px;
+}
+
+/* V19 — phrase de rassemblement remontée sous les deux tuiles */
+.union-closing-high{
+  margin:18px auto 10px;
+  padding:10px 18px;
+  text-align:center;
+  font-size:1.02rem;
+  font-weight:900;
+  color:var(--ink);
+}
 </style>
 </head>
 <body><main class="page"><div class="topbar"></div>
@@ -439,8 +573,6 @@ h1{color:white;font-size:clamp(42px,6.4vw,72px);text-shadow:0 4px 20px rgba(0,0,
 <nav class="nav">
 <a href="#constat">Ce qui ressort</a><a href="#greve">Pointage grève</a>
 <a href="#recommandations">13 recommandations</a>
-<a href="#enjeu">Avantage énergie</a>
-
 <a href="#mobilisation">Mobilisation IEG</a>
 <a href="#contacts">Contacts</a>
 </nav>
@@ -475,10 +607,29 @@ h1{color:white;font-size:clamp(42px,6.4vw,72px);text-shadow:0 4px 20px rgba(0,0,
     Consulter le guide PGI / GTA
   </a>
 </div></section><section class="reco-compact section" id="recommandations"><div class="kicker">Cour des comptes — RH EDF SA</div><h2>Les 13 recommandations à connaître</h2><p>Décryptage du rapport « <a href="https://www.ccomptes.fr/fr/publications/la-gestion-des-ressources-humaines-dedf-sa" rel="noopener noreferrer" target="_blank">La gestion des ressources humaines d’EDF SA</a> », réf. S2026-0342, Cour des comptes, 18 février 2026.</p><div class="recos">
-<div class="reco-reading-note">Les 13 recommandations sont reproduites dans leur intégralité. </div><div class="reco-clean-grid"><article class="reco-clean-card card reco"><div class="source-num num">1</div><div><h3>Limiter les revalorisations salariales annuelles</h3><p>Ne plus accorder de hausses générales sans lien avec les résultats de l’entreprise.</p><span class="tag source-tag">EDF SA · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">2</div><div><h3>Clarifier les compétences critiques à détenir en propre</h3><p>Définir les savoir-faire à conserver en interne plutôt que confiés à des sous-traitants.</p><span class="tag source-tag">EDF SA · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">3</div><div><h3>Réduire par étapes l’avantage énergie</h3><p>Plafonner les consommations bénéficiant du tarif préférentiel.</p><span class="tag source-tag">EDF SA · DGEC · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">4</div><div><h3>Revaloriser le barème fiscal et social de l’avantage énergie</h3><p>Recalculer sa valeur imposable sur la base des tarifs réels de l’électricité et du gaz.</p><span class="tag source-tag">DSS · DGFiP · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">5</div><div><h3>Réviser la grille de rémunération de la branche des IEG</h3><p>Moderniser une grille jugée insuffisamment différenciante.</p><span class="tag source-tag">EDF SA · DGEC · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">6</div><div><h3>Simplifier et mieux cibler les rémunérations complémentaires</h3><p>Réduire le nombre de primes existantes et leur coût.</p><span class="tag source-tag">EDF SA · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">7</div><div><h3>Accroître la part de la rémunération variable</h3><p>Donner davantage de poids aux primes de performance.</p><span class="tag source-tag">EDF SA · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">8</div><div><h3>Renforcer la différenciation dans l’attribution des primes</h3><p>Mieux distinguer les salariés selon leur investissement réel.</p><span class="tag source-tag">EDF SA · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">9</div><div><h3>Enrichir l’information sur la rémunération des cadres dirigeants</h3><p>Mieux informer le comité des rémunérations sur les objectifs atteints.</p><span class="tag source-tag">EDF SA · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">10</div><div><h3>Mettre un terme aux moyens logistiques des présidents d’honneur</h3><p>Arrêter de financer certains moyens accordés aux anciens présidents d’EDF.</p><span class="tag source-tag">EDF SA · 2026</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">11</div><div><h3>Renégocier les accords sur le temps de travail et les heures supplémentaires</h3><p>Revoir le régime des heures supplémentaires au regard du droit commun.</p><span class="tag source-tag">EDF SA · DGEC · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">12</div><div><h3>Mettre en place un décompte automatique du temps de travail</h3><p>Instaurer un suivi numérique des horaires.</p><span class="tag source-tag">EDF SA · 2027</span></div></article><article class="reco-clean-card card reco"><div class="source-num num">13</div><div><h3>Abaisser les plafonds du compte épargne-temps</h3><p>Réduire les plafonds du CET.</p><span class="tag source-tag">EDF SA · 2027</span></div></article></div>
-</div><div class="banner">Tarif agent, rémunération, temps de travail, CET : <span>nous sommes tous concernés.</span></div></section><section class="section" id="enjeu"><div class="kicker">Un des sujets du mécontentement</div><h2>Avantage énergie : remettre les chiffres en perspective</h2><div class="grid2"><div class="card"><p>Le Tarif Agent est régulièrement présenté comme un facteur de hausse des factures. Pourtant, les <strong>700 M€</strong> évoqués à l'échelle du groupe EDF représentent un ordre de grandeur limité lorsqu'ils sont rapportés à la production annuelle.</p><div class="metric-row"><div class="metric"><strong>700 M€</strong><span>coût avancé à l'échelle du groupe EDF</span></div><div class="metric"><strong>≈ 0,1 ct/kWh</strong><span>ordre de grandeur ramené à la production</span></div></div></div><div class="card"><h3>Ce qu'il faut retenir</h3><p>La facture d'énergie dépend de nombreux paramètres : fiscalité, marchés, investissements et politiques publiques. Faire du Tarif Agent la cause centrale de la hausse des prix est donc réducteur.</p><div class="quote">Les agents et retraités des IEG ne doivent pas servir de variable d'ajustement.</div></div></div></section>
-<section class="section alt" id="impact"><div class="kicker">Votre impact</div><h2>Et concrètement pour vous ?</h2><div class="grid2"><div class="card"><h3>L'ANE est déjà fiscalisé</h3><p>L'Avantage en Nature Énergie est déjà intégré au revenu imposable. Une revalorisation de sa valeur augmenterait la base fiscale et sociale, avec un effet potentiel sur le pouvoir d'achat.</p><div class="callout">Les montants futurs ne sont pas définitifs. La simulation utilise une hypothèse indicative de revalorisation ×2,15 et ne constitue pas un calcul fiscal officiel.</div></div><div class="calcbox"><div class="calc-title"><div class="calc-icon">⌨</div><div><div class="kicker">Calculette</div><h3>Estimez votre impact</h3></div></div><div class="fields"><div><label for="foyer">Foyer</label><select id="foyer"><option value="1">1 personne</option><option value="2">2 personnes</option><option value="3">3 personnes</option><option value="4">4 personnes</option><option value="5">5 personnes</option><option value="6">6 personnes ou +</option></select></div><div><label for="chauffage">Tarif Agent</label><select id="chauffage"><option value="yes">Avec chauffage</option><option value="no">Sans chauffage</option></select></div><div><label for="tmi">TMI</label><select id="tmi"><option value="0">0 %</option><option value="11">11 %</option><option selected="" value="30">30 %</option><option value="41">41 %</option><option value="45">45 %</option></select></div></div><div class="results"><div class="result"><span>ANE 2026</span><b id="current">—</b></div><div class="result"><span>Hypothèse</span><b id="future">—</b></div><div class="result main"><span>Impact impôt estimé</span><b id="extra">—</b><small id="month"></small></div></div></div></div><div class="tmi-guide"><div class="tmi-guide-icon">🔎</div><div class="tmi-guide-copy"><div class="tmi-guide-title">Où trouver votre TMI ?</div><p>Le <strong>Taux Marginal d’Imposition (TMI)</strong> correspond au taux appliqué à la tranche la plus élevée de vos revenus. <strong>Ce n’est pas votre taux de prélèvement à la source.</strong></p><div class="tmi-steps"><span><b>1</b> impots.gouv.fr</span><i>→</i><span><b>2</b> Documents</span><i>→</i><span><b>3</b> Dernier avis d’impôt</span><i>→</i><span><b>4</b> « Taux marginal d’imposition »</span></div><p class="tmi-example"><strong>Exemple :</strong> si votre avis indique « Taux marginal d’imposition : 30 % », sélectionnez <strong>30 %</strong> dans la calculette.</p></div></div></section>
-
+<div class="reco-reading-note">Les recommandations de la Cour des comptes couvrent plusieurs dimensions de la politique RH d’EDF SA.</div>
+<div class="reco-summary">
+<div class="reco-summary-card">
+<h3>Rémunérations et politique salariale</h3>
+<p>La Cour des comptes recommande de renforcer le pilotage des rémunérations, de mieux encadrer certains dispositifs et de faire évoluer plusieurs composantes de la politique salariale d’EDF SA.</p>
+</div>
+<div class="reco-summary-card">
+<h3>Avantage énergie et cadre social</h3>
+<p>Plusieurs recommandations portent sur l’évolution et le suivi de l’avantage énergie ainsi que sur son cadre fiscal et social, en lien avec les administrations concernées.</p>
+</div>
+<div class="reco-summary-card">
+<h3>Temps de travail et organisation</h3>
+<p>Le rapport traite également du temps de travail, de son suivi et de dispositifs associés, avec des recommandations visant leur maîtrise et leur évolution.</p>
+</div>
+<div class="reco-summary-card">
+<h3>Pilotage RH et garanties collectives</h3>
+<p>L’ensemble s’inscrit dans une réflexion plus large sur la gestion des ressources humaines d’EDF SA et sur des dispositifs qui touchent directement les salariés et le modèle social des IEG.</p>
+</div>
+</div>
+<div class="reco-summary-note">
+<strong>13 recommandations au total.</strong> Ce résumé en présente les principaux axes ; le détail et la formulation exacte restent accessibles dans le rapport de la Cour des comptes.
+</div>
+</div><div class="banner">Tarif agent, rémunération, temps de travail, CET : <span>nous sommes tous concernés.</span></div><div class="report-cta"><a class="button" href="https://www.ccomptes.fr/fr/publications/la-gestion-des-ressources-humaines-dedf-sa" rel="noopener noreferrer" target="_blank">Consulter le rapport complet de la Cour des comptes</a></div></section>
 <section class="section" id="mobilisation">
 <div class="kicker">15 septembre 2026</div>
 <h2>Actifs et retraités des IEG : rejoignez la mobilisation</h2>
@@ -492,7 +643,7 @@ h1{color:white;font-size:clamp(42px,6.4vw,72px);text-shadow:0 4px 20px rgba(0,0,
 <h3>Le 15 septembre</h3>
 <p>CAT Énergies sera également présente au rendez-vous avec la Sous-préfète de Thionville afin de porter les préoccupations des agents.</p>
 </article>
-</div>
+</div><div class="union-closing union-closing-high">Nos différences ne doivent jamais être plus fortes que ce qui nous rassemble.</div><div class="union-callout union-callout-under-tiles"><div class="union-callout-title">L’unité syndicale avant les échéances électorales</div><p>CAT Énergies, bien que non représentative à ce jour sur le site, est <strong>pleinement engagée aux côtés des agents</strong> et prend toute sa place dans la mobilisation. À l’approche des élections, les enjeux électoraux ne doivent pas prendre le pas sur l’essentiel : <strong>défendre ensemble les intérêts des agents et porter collectivement leurs revendications.</strong></p></div>
 <div class="banner">15 SEPTEMBRE — <span>ACTIFS &amp; RETRAITÉS DES IEG : REJOIGNEZ LA MOBILISATION</span></div>
 </section>
 <section class="contact" id="contact"><div class="kicker" style="color:#ffd45a">Proximité</div><h2>Vos contacts CAT Énergies Cattenom</h2><p class="intro">À votre écoute sur site.</p><div class="contacts"><div class="person"><h3>Aurélie ANDRÉ</h3><p>Représentante de Section Syndicale (RSS)</p><p>☎ 06.31.72.69.12<br/>✉ <a href="mailto:aurelie-a.andre@edf.fr">aurelie-a.andre@edf.fr</a></p></div><div class="person"><h3>Cédric BANZET</h3><p>Élu CSE · Contact local CAT Énergies Cattenom</p><p>☎ 06.47.40.08.54<br/>✉ <a href="mailto:cedric.banzet@edf.fr">cedric.banzet@edf.fr</a></p></div><div class="person office"><h3>Nous trouver</h3><p><strong>Bureau syndical</strong><br/>BPS · Rez-de-chaussée · B0-13</p></div></div></section>
