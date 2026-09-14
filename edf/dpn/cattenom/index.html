@@ -622,6 +622,24 @@
   .category-pill-btn[data-cat="Fiches pratiques"]{border-color:#b6dddd;color:#0b7d7d;background:#f5ffff}
   .category-tile[data-cat="Fiches pratiques"]{border-top:5px solid #0b8f8f}
 
+  /* Newsletters — CAT au Courant */
+  .type-newsletters{
+    border-top:5px solid #1f9fc4;
+    background:linear-gradient(180deg,#f2fbfe,#ffffff);
+  }
+  .category.type-pill-newsletters{
+    background:#e6f7fc;
+    color:#0b6e88;
+  }
+  .category-pill-btn[data-cat="Newsletters"]{
+    border-color:#a9dce9;
+    color:#0b6e88;
+    background:#f2fbfe;
+  }
+  .category-tile[data-cat="Newsletters"]{
+    border-top:5px solid #1f9fc4;
+  }
+
 
   .scope-switcher{margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px rgba(31,72,94,.06);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
   .scope-switcher strong{display:block;color:var(--primary-dark);margin-bottom:4px}
@@ -783,6 +801,11 @@ function categorySlug(value){
     .replace(/^-+|-+$/g,"") || "autres";
 }
 
+function categoryLabel(value){
+  if(value === "Newsletters") return "📰 Newsletters — CAT au Courant";
+  return value || "Autres";
+}
+
 function statusClass(status){
   if(status === "En ligne") return "online";
   if(status === "À venir") return "soon";
@@ -835,7 +858,7 @@ function renderCategories(){
     .sort((a,b) => a[0].localeCompare(b[0], "fr"))
     .map(([cat, qty]) => `
       <button class="category-pill-btn" type="button" data-cat="${escapeHtml(cat)}">
-        ${escapeHtml(cat)}
+        ${escapeHtml(categoryLabel(cat))}
         <span class="count">${qty}</span>
       </button>
     `).join("");
@@ -856,7 +879,7 @@ function renderLatest(){
 
   latestGrid.innerHTML = latest.map(item => `
     <article class="latest-item type-${categorySlug(item.category)}">
-      <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Autres")}</span>
+      <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(categoryLabel(item.category))}</span>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.description || "")}</p>
       <div class="latest-meta">Mis à jour le ${formatDateISO(item.updated || item.created)}</div>
@@ -913,7 +936,7 @@ function showResults(){
       <article class="search-result-row">
         <div class="search-result-main">
           <div class="search-result-top">
-            <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+            <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(categoryLabel(item.category || "Sans catégorie"))}</span>
             <span class="scope-badge">${escapeHtml(item.scope || "Périmètre non précisé")}</span>
             <h3>${escapeHtml(item.title)}</h3>
           </div>
@@ -926,7 +949,7 @@ function showResults(){
     cards.innerHTML = filtered.map(item => `
       <article class="card type-${categorySlug(item.category)}">
         <div class="topline">
-          <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+          <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(categoryLabel(item.category || "Sans catégorie"))}</span>
           <span class="status ${statusClass(item.status)}">${escapeHtml(item.status || "")}</span>
         </div>
         <h2>${escapeHtml(item.title)}</h2>
