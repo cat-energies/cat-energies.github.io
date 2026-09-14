@@ -1,0 +1,607 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CAT au Courant — 14 septembre 2026</title><meta name="description" content="Newsletter CAT Énergies Cattenom — actualité sociale et agenda.">
+<style>
+:root{
+  --blue:#173b68;
+  --blue2:#244f7b;
+  --blue3:#0f2d50;
+  --green:#69a64a;
+  --yellow:#f2bd2d;
+  --cyan:#23a6b3;
+  --purple:#8051c5;
+  --red:#d53a50;
+  --paper:#ffffff;
+  --mist:#eef3f6;
+  --cream:#f7f3e9;
+  --text:#27384a;
+  --muted:#667684;
+  --line:#dbe2e6;
+  --shadow:0 24px 70px rgba(16,43,76,.16);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 7%,rgba(242,189,45,.15),transparent 22%),
+    radial-gradient(circle at 92% 10%,rgba(105,166,74,.12),transparent 20%),
+    #e9eef1;
+  color:var(--text);
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+a{color:inherit}
+.page{
+  max-width:1120px;
+  margin:24px auto;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+/* EN-TÊTE — logo + "au courant" */
+.masthead{
+  padding:28px 38px 24px;
+  background:
+    radial-gradient(circle at 78% 22%,rgba(105,166,74,.12),transparent 22%),
+    linear-gradient(135deg,#ffffff,#f8fbfd);
+  border-bottom:1px solid var(--line);
+}
+.brand-lockup{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  min-width:0;
+}
+.brand-logo{
+  width:215px;
+  max-width:46vw;
+  height:auto;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+.au-courant{
+  min-width:0;
+}
+.au-courant-title{
+  margin:0;
+  color:var(--blue);
+  font-size:clamp(44px,7vw,82px);
+  line-height:.88;
+  letter-spacing:-.06em;
+  font-weight:950;
+}
+.au-courant-title .power{
+  position:relative;
+  display:inline-block;
+  color:var(--blue);
+}
+.au-courant-title .power:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-8px;
+  height:7px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--yellow),var(--green));
+}
+.slogan{
+  margin:14px 0 0;
+  color:#4e667a;
+  font-size:18px;
+  font-weight:700;
+}
+.handwritten{
+  margin-left:auto;
+  max-width:220px;
+  color:var(--blue);
+  font-family:"Segoe Print","Comic Sans MS",cursive;
+  font-weight:700;
+  font-size:17px;
+  line-height:1.35;
+  transform:rotate(-3deg);
+}
+.handwritten:after{
+  content:"";
+  display:block;
+  width:100px;
+  height:4px;
+  margin:8px 0 0 auto;
+  background:var(--yellow);
+  border-radius:999px;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:270px;
+  padding:38px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  align-items:center;
+  gap:28px;
+  background:
+    linear-gradient(90deg,rgba(23,59,104,.96),rgba(36,79,123,.90)),
+    linear-gradient(135deg,#173b68,#244f7b);
+  color:#fff;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  right:-120px;
+  top:-170px;
+  border:52px solid rgba(255,255,255,.06);
+  border-radius:50%;
+}
+.hero-copy{position:relative;z-index:2}
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:var(--yellow);
+  color:#26374a;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.hero h1{
+  margin:16px 0 10px;
+  font-size:clamp(34px,5vw,56px);
+  line-height:1;
+  letter-spacing:-.035em;
+}
+.hero p{
+  margin:0;
+  max-width:700px;
+  color:#e8eef4;
+  font-size:18px;
+}
+.quote{
+  position:relative;
+  z-index:2;
+  background:#fff;
+  color:var(--blue);
+  border-radius:20px;
+  padding:22px 22px 18px;
+  box-shadow:0 14px 32px rgba(0,0,0,.16);
+  font-family:"Segoe Print","Comic Sans MS",cursive;
+  font-weight:700;
+  font-size:19px;
+  transform:rotate(-2deg);
+}
+.quote:before{
+  content:"“";
+  display:block;
+  color:var(--yellow);
+  font-family:Georgia,serif;
+  font-size:52px;
+  line-height:.5;
+  margin-bottom:12px;
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  gap:8px;
+  padding:11px 30px;
+  overflow:auto;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 8px 22px rgba(23,59,104,.06);
+}
+.nav a{
+  white-space:nowrap;
+  text-decoration:none;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:850;
+  padding:8px 11px;
+  border-radius:999px;
+  background:var(--mist);
+}
+
+/* CONTENU */
+main{padding:32px 38px 46px}
+.layout{
+  display:grid;
+  grid-template-columns:275px 1fr;
+  gap:20px;
+  align-items:start;
+}
+.toc{
+  position:sticky;
+  top:64px;
+  padding:22px;
+  border-radius:20px;
+  background:linear-gradient(180deg,#f9fbfd,#eef4f7);
+  border:1px solid var(--line);
+}
+.toc h2{
+  margin:0 0 6px;
+  color:var(--blue);
+  font-size:26px;
+}
+.toc p{
+  margin:0 0 14px;
+  color:var(--muted);
+  font-size:12px;
+}
+.toc a{
+  display:grid;
+  grid-template-columns:34px 1fr;
+  gap:9px;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid #dfe7eb;
+  text-decoration:none;
+  color:var(--blue);
+  font-size:13px;
+  font-weight:800;
+}
+.toc a:last-child{border-bottom:0}
+.num{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  background:var(--accent,var(--green));
+  font-size:11px;
+  font-weight:950;
+}
+.tip{
+  margin-top:17px;
+  padding:13px;
+  border-radius:14px;
+  background:#fff;
+  border-left:4px solid var(--yellow);
+  color:#4f6678;
+  font-size:12px;
+}
+.content{min-width:0}
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0 0 17px;
+  color:var(--blue);
+  font-size:28px;
+}
+.section-title:after{
+  content:"";
+  height:1px;
+  background:var(--line);
+  flex:1;
+}
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.story{
+  --accent:var(--green);
+  --soft:#eef7eb;
+  position:relative;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 24px rgba(23,59,104,.06);
+}
+.story:before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;width:6px;
+  background:var(--accent);
+}
+.story.gold{--accent:var(--yellow);--soft:#fff7dd}
+.story.blue{--accent:#3b82bd;--soft:#eef6fc}
+.story.cyan{--accent:var(--cyan);--soft:#ecfafb}
+.story.purple{--accent:var(--purple);--soft:#f5effc}
+.story.red{--accent:var(--red);--soft:#fff0f3}
+.story-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.story-id{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--accent);
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.story-bubble{
+  width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--accent);
+  color:#fff;
+  font-weight:950;
+}
+.story-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--soft);
+  display:grid;place-items:center;
+  font-size:24px;
+}
+.story h3{
+  margin:14px 0 10px;
+  color:var(--blue);
+  font-size:23px;
+  line-height:1.13;
+}
+.story p{margin:0 0 12px}
+.retain{
+  margin-top:14px;
+  padding:14px 15px;
+  background:var(--soft);
+  border-radius:14px;
+  font-size:13px;
+}
+.retain b{
+  display:block;
+  color:var(--blue);
+  margin-bottom:7px;
+}
+.retain ul{margin:0;padding-left:18px}
+.retain li{margin:5px 0}
+.section{margin-top:34px}
+.compact{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.brief{
+  padding:18px;
+  border-radius:16px;
+  background:var(--mist);
+  border-top:4px solid var(--accent,var(--blue));
+}
+.brief b{
+  display:block;
+  color:var(--blue);
+  margin-bottom:5px;
+}
+.brief span{font-size:13px;color:var(--muted)}
+.follow-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.follow{
+  padding:21px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,#f8fbfd,#eef4f7);
+}
+.follow h3{
+  margin:0 0 10px;
+  color:var(--blue);
+}
+.follow ul{margin:0;padding-left:19px}
+.big-quote{
+  padding:24px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#eff8ed,#f8fbf6);
+  color:var(--blue);
+  font-weight:850;
+  font-size:20px;
+  display:flex;
+  align-items:center;
+}
+.big-quote:before{
+  content:"“";
+  color:var(--green);
+  font-size:54px;
+  margin-right:10px;
+  line-height:.7;
+}
+
+/* FOOTER SANS MENTION Agenda social / CSE / réunion locale */
+.contact{
+  position:relative;
+  overflow:hidden;
+  padding:38px;
+  background:linear-gradient(135deg,#102b4c 0 58%,var(--blue) 58%);
+  color:#fff;
+}
+.contact:before{
+  content:"";
+  position:absolute;
+  left:-6%;
+  right:-6%;
+  top:-26px;
+  height:54px;
+  background:#fff;
+  border-radius:50%;
+}
+.contact-inner{position:relative;z-index:2}
+.contact h2{
+  margin:6px 0 18px;
+  font-size:28px;
+}
+.contacts{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;
+}
+.person{
+  padding:17px;
+  border-radius:15px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.13);
+}
+.person b{
+  display:block;
+  color:var(--yellow);
+  margin-bottom:4px;
+}
+.person a{
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  word-break:break-word;
+}
+footer{
+  padding:17px 30px;
+  background:#102b4c;
+  color:#bfcbd8;
+  text-align:center;
+  font-size:11px;
+}
+
+@media(max-width:900px){
+  .handwritten{display:none}
+  .hero{grid-template-columns:1fr}
+  .layout{grid-template-columns:1fr}
+  .toc{position:relative;top:auto}
+  .grid2,.follow-grid{grid-template-columns:1fr}
+  .compact{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  .page{margin:0;border-radius:0}
+  .masthead,.hero,.contact{padding-left:20px;padding-right:20px}
+  .brand-lockup{align-items:flex-start;flex-direction:column}
+  .brand-logo{width:165px;max-width:70vw}
+  .au-courant-title{font-size:52px}
+  main{padding:26px 18px 38px}
+  .compact,.contacts{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .page{margin:0;max-width:none;box-shadow:none;border-radius:0}
+  .nav{display:none}
+  .toc{position:relative;top:auto}
+  .story,.brief,.follow,.big-quote{break-inside:avoid}
+}
+
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 14px;border-radius:999px;background:var(--blue);color:#fff!important;text-decoration:none;font-size:13px;font-weight:900}
+.cta.gold{background:var(--yellow);color:var(--blue)!important}
+.cta.green{background:var(--green);color:#fff!important}
+.headline{margin-bottom:22px;padding:25px;border-radius:22px;background:linear-gradient(135deg,#fff7dd,#fff);border:1px solid #f1d982;border-left:7px solid var(--yellow);box-shadow:0 10px 24px rgba(23,59,104,.06)}
+.headline .date{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--yellow);color:var(--blue);font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.06em}
+.headline h2{margin:12px 0 8px;color:var(--blue);font-size:31px;line-height:1.08}
+.headline p{margin:0;max-width:780px}
+.agenda-list{display:grid;gap:12px;margin-top:14px}
+.agenda-day{padding:17px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue)}
+.agenda-day b{display:block;color:var(--blue);font-size:17px;margin-bottom:7px}
+.agenda-day ul{margin:0;padding-left:19px}
+.poll{margin-top:30px;padding:25px;border-radius:22px;background:linear-gradient(135deg,#eef7eb,#fff);border:1px solid #cfe3c7;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.poll h2{margin:0 0 7px;color:var(--blue);font-size:27px}.poll p{margin:0}
+@media(max-width:620px){.poll{grid-template-columns:1fr}.headline h2{font-size:26px}}
+</style></head><body>
+<article class="page">
+  <section class="masthead">
+    <div class="brand-lockup">
+      <img class="brand-logo" src="https://cat-energies.github.io/assets/cat-energies/img/LOGO_OFFICIEL_CAT_ENERGIES.png" alt="Logo CAT Énergies">
+      <div class="au-courant">
+        <h1 class="au-courant-title">au <span class="power">courant</span></h1>
+        <p class="slogan">L’essentiel pour vous, tout simplement.</p>
+      </div>
+      <div class="handwritten">Informer<br>Échanger<br>Agir ensemble</div>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="hero-kicker">Édition · 14 septembre 2026</span>
+      <h1>Cette semaine à Cattenom</h1>
+      <p>Mobilisation du 15 septembre, logement, correction salariale, agenda des instances et questionnaire salariés : les informations utiles à retenir.</p>
+    </div>
+    <div class="quote">Votre actualité sociale, en quelques minutes.</div>
+  </section>
+
+  <nav class="nav">
+    <a href="#une">À la une</a><a href="#logement">Logement</a><a href="#correction">Correction salariale</a>
+    <a href="#agenda">Agenda</a><a href="#sondage">Votre avis</a><a href="#contacts">Contacts</a>
+  </nav>
+
+  <main>
+    <section class="headline" id="une">
+      <span class="date">À la une · 15 septembre</span>
+      <h2>Mobilisation du 15 septembre</h2>
+      <p>Retrouvez le communiqué CAT Énergies Cattenom consacré à la mobilisation du 15 septembre et les informations de pointage associées.</p>
+      <a class="cta gold" href="https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20Mobilisation%20du%20150926_%20pointage.html">Lire le communiqué →</a>
+    </section>
+
+    <h2 class="section-title">📣 Agenda social : ce qu’il faut retenir</h2>
+    <div class="grid2">
+      <article class="story" id="logement">
+        <div class="story-head"><div class="story-id"><span class="story-bubble">01</span>Logement</div><span class="story-icon">🏠</span></div>
+        <h3>Politique logement : les règles d’accès évoluent</h3>
+        <p>Le document présenté rappelle que le parc logement est un levier d’attractivité et de mobilité, dans un contexte immobilier local tendu. Le parc mentionné compte 591 logements.</p>
+        <div class="retain"><b>Pour les salariés</b><ul>
+          <li>Depuis le 1er juillet 2026, un logement est proposé à chaque nouvel embauché, quel que soit son collège ou son unité d’appartenance.</li>
+          <li>En mutation géographique, le salarié choisit en principe entre le CMM et un logement, dans la limite du parc disponible.</li>
+          <li>La demande doit notamment être faite dans les 6 mois suivant l’embauche ou la mutation administrative et concerner la résidence principale.</li>
+          <li>Les attributions suivent des règles de priorité puis l’ordre chronologique des demandes.</li>
+        </ul></div>
+      </article>
+
+      <article class="story gold" id="correction">
+        <div class="story-head"><div class="story-id"><span class="story-bubble">02</span>Rémunération</div><span class="story-icon">💶</span></div>
+        <h3>Correction salariale : comment une situation est examinée</h3>
+        <p>L’étude concerne les dispositifs liés à l’accord Handicap et à l’accord Égalité professionnelle Femmes-Hommes. Une situation individuelle peut être portée par plusieurs acteurs, dont le salarié ou un représentant du personnel.</p>
+        <div class="retain"><b>Pour les salariés</b><ul>
+          <li>L’examen est annuel, pendant la campagne d’été de juin à septembre.</li>
+          <li>Dans le cadre de l’accord Handicap, chaque situation est étudiée systématiquement l’année du 50e anniversaire.</li>
+          <li>L’analyse porte notamment sur le parcours, la dynamique GF/NR, les trois derniers EAP et les comparants.</li>
+          <li>Une fiche argumentaire rassemble les visions des différentes parties prenantes avant décision.</li>
+        </ul></div>
+      </article>
+    </div>
+
+    <section class="section" id="agenda">
+      <h2 class="section-title">🗓️ À l’agenda</h2>
+      <div class="agenda-list">
+        <div class="agenda-day"><b>22 septembre · CSE ordinaire</b><ul>
+          <li>Dérogations à la durée journalière du travail</li>
+          <li>Suppression de l’annexe du règlement intérieur intitulée « charte d’utilisation des ressources informatiques et des télécommunications »</li>
+          <li>Document unique d’évaluation des risques professionnels (DUERP) 2025</li>
+          <li>REX plateau TEM</li>
+          <li>Organisation des compétences consignation HMTcc / OPcc au sein du Service Conduite</li>
+        </ul></div>
+        <div class="agenda-day"><b>29 septembre · CA CMCAS</b><span>Prochaine échéance à l’agenda social.</span></div>
+      </div>
+    </section>
+
+    <section class="poll" id="sondage">
+      <div>
+        <h2>💬 Et si nos prochaines actions partaient de vos besoins ?</h2>
+        <p>CAT Énergies souhaite donner la parole aux salariés sur leurs attentes en matière de syndicat. Quelques minutes suffisent pour partager vos besoins et vos priorités.</p>
+      </div>
+      <a class="cta green" href="https://forms.cloud.microsoft/e/SSTqF7Z1NB">Remplir le formulaire →</a>
+    </section>
+  </main>
+
+  <section class="contact" id="contacts">
+    <div class="contact-inner">
+      <h2>Une question ? Besoin d’un accompagnement ?</h2>
+      <div class="contacts">
+        <div class="person"><b>Aurélie ANDRÉ</b>RSS — Élue CSE EDF<br>06 31 72 69 12<br><a href="mailto:aurelie-a.andre@edf.fr">aurelie-a.andre@edf.fr</a></div>
+        <div class="person"><b>Cédric BANZET</b>Élu CSE<br>06 47 40 08 54<br><a href="mailto:cedric.banzet@edf.fr">cedric.banzet@edf.fr</a></div>
+        <div class="person"><b>CAT Énergies Cattenom</b>CNPE de Cattenom – BPS – 0-13<br><a href="mailto:cat-energies-cattenom@edf.fr">cat-energies-cattenom@edf.fr</a></div>
+      </div>
+    </div>
+  </section>
+  <footer>CAT Énergies Cattenom · Plus qu’un syndicat, une énergie collective !</footer>
+</article>
+<script data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body></html>
