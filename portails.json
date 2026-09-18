@@ -11,7 +11,7 @@
     "scope": "Cattenom",
     "level": "Site",
     "parent": "DPN",
-    "url": "/edf/dpn/cattenom/",
+    "url": "/edf/dpn/cattenom/index.html",
     "communications": "/edf/dpn/cattenom/communications.json"
   }
 ]
