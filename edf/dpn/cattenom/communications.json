@@ -1,25 +1,36 @@
 [
-{
-  "title": "CAT au Courant — 14 septembre 2026",
-  "description": "La newsletter CAT Énergies Cattenom : actualités, informations salariés, agenda social et rendez-vous à venir.",
-  "category": "Newsletters",
-  "status": "En ligne",
-  "date": "14/09/2026",
-  "url": "https://cat-energies.github.io/edf/dpn/cattenom/newsletters/Newsletter_CAT_au_Courant_14-09-2026.html",
-  "created": "2026-09-14",
-  "updated": "2026-09-14",
-  "scope": "Cattenom"
-},
-{
-  "title": "Mobilisation du 15 septembre — Tous concernés !",
-  "description": "Communiqué CAT Énergies Cattenom sur la mobilisation du 15 septembre : revendications, unité syndicale, modalités de pointage PGI/GTA et recommandations de la Cour des comptes.",
-  "category": "Communiqués",
-  "status": "En ligne",
-  "date": "10/09/2026",
-  "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20Mobilisation%20du%20150926_%20pointage.html",
-  "created": "2026-09-10",
-  "updated": "2026-09-10",
-  "scope": "Cattenom"
+  {
+    "title": "CAT au Courant — 28 septembre 2026",
+    "description": "La newsletter CAT Énergies Cattenom : rencontre du secrétaire général le 30 septembre, logement, rémunération, sondage salariés, CET 2026 et inscription à l’Arbre de Noël.",
+    "category": "Newsletters",
+    "status": "En ligne",
+    "date": "28/09/2026",
+    "url": "https://cat-energies.github.io/edf/dpn/cattenom/newsletters/Newsletter_CAT_au_Courant_28-09-2026.html",
+    "created": "2026-09-28",
+    "updated": "2026-09-28",
+    "scope": "Cattenom"
+  },
+  {
+    "title": "CAT au Courant — 14 septembre 2026",
+    "description": "La newsletter CAT Énergies Cattenom : actualités, informations salariés, agenda social et rendez-vous à venir.",
+    "category": "Newsletters",
+    "status": "En ligne",
+    "date": "14/09/2026",
+    "url": "https://cat-energies.github.io/edf/dpn/cattenom/newsletters/Newsletter_CAT_au_Courant_14-09-2026.html",
+    "created": "2026-09-14",
+    "updated": "2026-09-14",
+    "scope": "Cattenom"
+  },
+  {
+    "title": "Mobilisation du 15 septembre — Tous concernés !",
+    "description": "Communiqué CAT Énergies Cattenom sur la mobilisation du 15 septembre : revendications, unité syndicale, modalités de pointage PGI/GTA et recommandations de la Cour des comptes.",
+    "category": "Communiqués",
+    "status": "En ligne",
+    "date": "10/09/2026",
+    "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20Mobilisation%20du%20150926_%20pointage.html",
+    "created": "2026-09-10",
+    "updated": "2026-09-10",
+    "scope": "Cattenom"
   },
   {
     "title": "Guide de l'Alternance 2026",
@@ -88,14 +99,14 @@
     "scope": "Cattenom"
   },
   {
-  "title": "AG du 10 septembre — Cour des comptes",
-  "description": "Communiqué CAT Énergies Cattenom relatif à l’AG du 10 septembre et à la Cour des comptes.",
-  "category": "Communiqués",
-  "status": "En ligne",
-  "date": "10/09/2026",
-  "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20AG%20du%2010%20septembre_cour%20des%20comptes.html",
-  "created": "2026-09-08",
-  "updated": "2026-09-08",
-  "scope": "Cattenom"
-}
+    "title": "AG du 10 septembre — Cour des comptes",
+    "description": "Communiqué CAT Énergies Cattenom relatif à l’AG du 10 septembre et à la Cour des comptes.",
+    "category": "Communiqués",
+    "status": "En ligne",
+    "date": "10/09/2026",
+    "url": "https://cat-energies.github.io/edf/dpn/cattenom/communiques/09%20-%20AG%20du%2010%20septembre_cour%20des%20comptes.html",
+    "created": "2026-09-08",
+    "updated": "2026-09-08",
+    "scope": "Cattenom"
+  }
 ]
