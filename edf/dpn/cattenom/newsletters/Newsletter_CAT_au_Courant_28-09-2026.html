@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CAT au Courant — 28 septembre 2026</title>
-<meta name="description" content="Newsletter CAT Énergies Cattenom — rencontre du 30 septembre, logement, rémunération et questionnaire salariés.">
+<meta name="description" content="Newsletter CAT Énergies Cattenom — rencontre du 30 septembre, CET 2026, Arbre de Noël, catalogue Automne-Hiver et questionnaire salariés.">
 <style>
 :root{
   --blue:#173b68;--blue2:#244f7b;--blue3:#0f2d50;--green:#69a64a;--yellow:#f2bd2d;
@@ -31,6 +31,78 @@ main{padding:34px 38px 46px}.section-title{display:flex;align-items:center;gap:1
 @media(max-width:900px){.handwritten{display:none}.feature{grid-template-columns:1fr}.feature-image img{max-height:700px}.facts{grid-template-columns:1fr 1fr 1fr}.grid2{grid-template-columns:1fr}.contacts{grid-template-columns:1fr}.poll{grid-template-columns:1fr}}
 @media(max-width:620px){.catalogue-visual{grid-template-columns:1fr}.catalogue-cover img{max-height:340px}.catalogue-grid{grid-template-columns:1fr}.catalogue-action{align-items:flex-start;flex-direction:column}.catalogue-cta{width:100%}.noel-grid{grid-template-columns:1fr}.noel-action{align-items:flex-start;flex-direction:column}.noel-alert{grid-template-columns:1fr}.noel-alert .deadline{font-size:30px}.noel-cta{width:100%}.page{margin:0;border-radius:0}.masthead,.hero,.contact{padding-left:20px;padding-right:20px}.brand-lockup{align-items:flex-start;flex-direction:column}.brand-logo{width:165px;max-width:70vw}.au-courant-title{font-size:52px}.hero-top{align-items:flex-start;flex-direction:column;gap:8px}.feature{grid-template-columns:1fr}.feature-copy h2{font-size:29px}.facts{grid-template-columns:1fr}main{padding:26px 18px 38px}.nav{padding-left:18px}.poll{padding:20px}}
 @media print{body{background:#fff}.page{margin:0;max-width:none;box-shadow:none;border-radius:0}.nav{display:none}.story,.poll{break-inside:avoid}}
+
+
+/* --- V2 : encarts harmonises / contenu conserve --- */
+main{background:linear-gradient(180deg,#fbfcfd 0%,#f6f9fb 100%)}
+.section{margin:0 0 28px}
+.section-title{font-size:27px;letter-spacing:-.02em;margin-bottom:18px}
+
+.story{--accent:#69a64a;--soft:#eef7eb;isolation:isolate;padding:25px 26px 24px;border:1px solid rgba(23,59,104,.10);border-radius:22px;background:linear-gradient(145deg,#fff 0%,#fbfdff 100%);box-shadow:0 14px 34px rgba(23,59,104,.09);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.story:before{width:7px;border-radius:0 8px 8px 0}
+.story:after{content:"";position:absolute;right:-52px;top:-62px;width:165px;height:165px;border-radius:50%;background:radial-gradient(circle,var(--soft) 0%,rgba(255,255,255,0) 70%);z-index:-1}
+.story.blue{--accent:#244f7b;--soft:#edf4fb}
+.story.gold{--accent:#d69b0b;--soft:#fff6d9}
+.story-head{align-items:center}
+.story-id{font-size:11px;letter-spacing:.10em}
+.story-bubble{width:46px;height:46px;box-shadow:0 7px 16px color-mix(in srgb,var(--accent) 22%,transparent)}
+.story-icon{width:52px;height:52px;border-radius:17px;background:var(--soft);box-shadow:inset 0 0 0 1px rgba(23,59,104,.05)}
+.story h3{font-size:24px;margin:16px 0 9px;letter-spacing:-.02em}
+.story p{color:#52687b;max-width:760px}
+.story .cta{margin-top:6px;background:var(--accent);box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 22%,transparent)}
+.story .cta:hover{transform:translateY(-1px);filter:brightness(.98)}
+
+.noel-wrap,.catalogue-wrap{margin-left:38px;margin-right:38px}
+.noel-wrap{padding:0;border:1px solid #efd9d9;border-radius:24px;background:#fff;box-shadow:0 15px 38px rgba(23,59,104,.09)}
+.noel-wrap:after{right:-85px;top:-95px;width:260px;height:260px;background:radial-gradient(circle,rgba(185,28,28,.10),rgba(185,28,28,0) 70%)}
+.noel-head{padding:24px 26px 20px;background:linear-gradient(135deg,#fffafa 0%,#fff 72%);border-bottom:1px solid #f2e3e3}
+.noel-icon{width:56px;height:56px;border-radius:17px;background:linear-gradient(145deg,#9f1d1d,#cf3030);box-shadow:0 9px 20px rgba(185,28,28,.20)}
+.noel-head h2{font-size:27px;letter-spacing:-.02em}
+.noel-alert{margin:20px 24px 0;padding:16px 18px;border-radius:15px;background:linear-gradient(120deg,#a91e1e 0%,#d43131 72%,#e04a4a 100%);box-shadow:0 9px 22px rgba(185,28,28,.17)}
+.noel-alert .deadline{font-size:31px;padding-right:17px;border-right:1px solid rgba(255,255,255,.30)}
+.noel-grid{gap:14px;margin:16px 24px 0}
+.noel-point{padding:17px 17px 16px;border-radius:17px;border:1px solid #e6ebef;box-shadow:0 7px 18px rgba(23,59,104,.045)}
+.noel-point.highlight{background:linear-gradient(145deg,#fff7f7,#fff);border-color:#efc9c9}
+.noel-point strong{font-size:15px;margin-bottom:6px}
+.noel-action{margin:18px 24px 24px;padding-top:17px;border-top:1px dashed #dce3e8}
+.noel-cta{background:linear-gradient(135deg,#173b68,#244f7b);box-shadow:0 9px 20px rgba(23,59,104,.18)}
+
+.catalogue-wrap{padding:0;border:1px solid #e8dfc9;border-radius:24px;background:#fff;box-shadow:0 15px 38px rgba(23,59,104,.09)}
+.catalogue-wrap:after{right:-80px;top:-90px;width:250px;height:250px;background:radial-gradient(circle,rgba(242,189,45,.14),rgba(242,189,45,0) 70%)}
+.catalogue-head{padding:23px 26px 19px;background:linear-gradient(135deg,#fffaf0 0%,#fff 72%);border-bottom:1px solid #eee4d0}
+.catalogue-icon{width:54px;height:54px;border-radius:17px;background:linear-gradient(145deg,#c97808,#f2bd2d);box-shadow:0 9px 20px rgba(217,119,6,.18)}
+.catalogue-head h2{font-size:27px;letter-spacing:-.02em}
+.catalogue-visual{margin:20px 24px 0;gap:20px;align-items:stretch}
+.catalogue-cover{border-radius:18px;padding:10px;border:1px solid #e8ecef;box-shadow:0 10px 24px rgba(23,59,104,.08);display:flex;align-items:center;justify-content:center}
+.catalogue-intro{padding:18px 18px 18px 2px;display:flex;flex-direction:column;justify-content:center}
+.catalogue-intro h3{font-size:21px;letter-spacing:-.01em}
+.catalogue-grid{gap:14px;margin:18px 24px 0}
+.catalogue-card{padding:17px 18px;border-radius:18px;border:1px solid #e6ebef;box-shadow:0 7px 18px rgba(23,59,104,.045)}
+.catalogue-card h3{font-size:18px;padding-bottom:9px;border-bottom:1px solid #edf0f2}
+.catalogue-date{gap:12px;padding:11px 0}
+.catalogue-date .badge{min-width:56px;padding:8px 7px;border-radius:12px;background:linear-gradient(145deg,#fff7dc,#ffefb9);color:#8b5600;border:1px solid #f4dda0;box-shadow:0 4px 10px rgba(217,119,6,.06)}
+.catalogue-social{margin:15px 24px 24px;padding:15px 17px;border-radius:16px;background:linear-gradient(145deg,#eef8eb,#f8fcf6);border-color:#cee4c6}
+.catalogue-social .ico{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#fff;border:1px solid #dcebd7;font-size:22px;flex:0 0 auto}
+.catalogue-cta{background:linear-gradient(135deg,#173b68,#244f7b);box-shadow:0 8px 18px rgba(23,59,104,.17)}
+
+.poll{margin-top:30px;border-radius:24px;box-shadow:0 16px 38px rgba(23,59,104,.18)}
+.poll:before{content:"";position:absolute;left:-65px;bottom:-95px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.055)}
+
+@media(hover:hover){
+  .story:hover,.noel-point:hover,.catalogue-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(23,59,104,.10)}
+  .noel-point,.catalogue-card{transition:transform .18s ease,box-shadow .18s ease}
+  .noel-cta:hover,.catalogue-cta:hover{transform:translateY(-1px);filter:brightness(1.04)}
+}
+
+@media(max-width:620px){
+  .noel-wrap,.catalogue-wrap{margin-left:18px;margin-right:18px}
+  .noel-head,.catalogue-head{padding:20px}
+  .noel-alert,.noel-grid,.catalogue-visual,.catalogue-grid,.catalogue-social{margin-left:18px;margin-right:18px}
+  .noel-action{margin-left:18px;margin-right:18px}
+  .noel-alert .deadline{border-right:0;padding-right:0;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.25)}
+  .story{padding:21px 20px}
+}
+
 </style>
 </head>
 <body>
@@ -73,40 +145,12 @@ main{padding:34px 38px 46px}.section-title{display:flex;align-items:center;gap:1
 
   <nav class="nav">
     <a href="#une">À la une</a>
-    <a href="#logement">Logement</a><a href="#cet">CET 2026</a><a href="#noel">Arbre de Noël</a><a href="#catalogue">Automne-Hiver</a>
-    <a href="#correction">Rémunération</a>
+<a href="#cet">CET 2026</a><a href="#noel">Arbre de Noël</a><a href="#catalogue">Automne-Hiver</a>
     <a href="#sondage">Votre avis</a>
     <a href="#contacts">Contacts</a>
   </nav>
 
   <main>
-    <h2 class="section-title">📣 Les informations à retenir</h2>
-    <div class="grid2">
-      <article class="story" id="logement">
-        <div class="story-head"><div class="story-id"><span class="story-bubble">01</span>Logement</div><span class="story-icon">🏠</span></div>
-        <h3>Politique logement : les règles d’accès évoluent</h3>
-        <p>Le parc logement est présenté comme un levier d’attractivité et de mobilité dans un contexte immobilier local tendu. Le parc mentionné compte 591 logements.</p>
-        <div class="retain"><b>Pour les salariés</b><ul>
-          <li>Depuis le 1er juillet 2026, un logement est proposé à chaque nouvel embauché, quel que soit son collège ou son unité d’appartenance.</li>
-          <li>En mutation géographique, le salarié choisit en principe entre le CMM et un logement, dans la limite du parc disponible.</li>
-          <li>La demande doit notamment être faite dans les 6 mois suivant l’embauche ou la mutation administrative et concerner la résidence principale.</li>
-          <li>Les attributions suivent des règles de priorité puis l’ordre chronologique des demandes.</li>
-        </ul></div>
-      </article>
-
-      <article class="story gold" id="correction">
-        <div class="story-head"><div class="story-id"><span class="story-bubble">02</span>Rémunération</div><span class="story-icon">💶</span></div>
-        <h3>Correction salariale : comment une situation est examinée</h3>
-        <p>L’étude concerne les dispositifs liés à l’accord Handicap et à l’accord Égalité professionnelle Femmes-Hommes. Une situation individuelle peut être portée par plusieurs acteurs, dont le salarié ou un représentant du personnel.</p>
-        <div class="retain"><b>Pour les salariés</b><ul>
-          <li>L’examen est annuel, pendant la campagne d’été de juin à septembre.</li>
-          <li>Dans le cadre de l’accord Handicap, chaque situation est étudiée systématiquement l’année du 50e anniversaire.</li>
-          <li>L’analyse porte notamment sur le parcours, la dynamique GF/NR, les trois derniers EAP et les comparants.</li>
-          <li>Une fiche argumentaire rassemble les visions des différentes parties prenantes avant décision.</li>
-        </ul></div>
-      </article>
-    </div>
-
 
     <section class="section" id="cet">
       <h2 class="section-title">⏳ Compte épargne temps (CET)</h2>
