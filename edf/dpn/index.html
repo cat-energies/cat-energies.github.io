@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portail des communications - CAT Énergies DPN</title>
+<style>
+  :root{
+    --bg:#f4f8fb;
+    --card:#ffffff;
+    --text:#17324d;
+    --muted:#6b7f92;
+    --primary:#0b6e9f;
+    --primary-dark:#084f73;
+    --accent:#54b8d3;
+    --line:#dce8ef;
+    --green:#2e9b67;
+    --orange:#d88a24;
+    --grey:#7f8c98;
+    --shadow:0 10px 28px rgba(20,63,88,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(180deg,#eef7fb 0,#f8fbfd 260px,#f4f8fb 100%);
+    color:var(--text);
+  }
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:#0e1f4a;
+    color:#fff;
+    padding:34px 22px 108px;
+  }
+  .hero:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(160deg,transparent 48%,rgba(46,109,191,.20) 48.2%,rgba(46,109,191,.20) 60%,transparent 60.2%),
+      linear-gradient(165deg,transparent 58%,rgba(55,147,49,.13) 58.2%,rgba(55,147,49,.13) 68%,transparent 68.2%);
+    pointer-events:none;
+  }
+  .waves{
+    position:absolute;
+    left:0;right:0;bottom:-1px;
+    height:86px;
+    z-index:1;
+  }
+  .waves svg{width:100%;height:100%;display:block}
+  .hero-inner{position:relative;z-index:2}
+  .hero-inner,.container{
+    width:min(1180px,calc(100% - 32px));
+    margin:auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:28px;
+  }
+  .logo-wrap{
+    width:125px;height:125px;
+    border-radius:18px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:7px;
+    box-shadow:0 8px 24px rgba(0,0,0,.20);
+    flex:0 0 auto;
+  }
+  .logo-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+  .brand-name{font-size:18px;font-weight:800}
+  .brand-sub{opacity:.78;font-size:13px}
+  h1{margin:0;font-size:clamp(28px,4vw,46px);line-height:1.05}
+  .subtitle{max-width:760px;font-size:17px;line-height:1.6;opacity:.95;margin:14px 0 0}
+  .container{position:relative;z-index:2;margin-top:-34px;padding-bottom:50px}
+  .toolbar{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    padding:18px;
+    display:grid;
+    grid-template-columns:minmax(260px,1fr) 210px 190px;
+    gap:12px;
+  }
+  input,select{
+    width:100%;
+    border:1px solid #cbdce6;
+    border-radius:12px;
+    padding:13px 14px;
+    font-size:15px;
+    color:var(--text);
+    background:#fff;
+    outline:none;
+  }
+  .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:12px;margin:24px 2px 14px;color:var(--muted);font-size:14px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 6px 18px rgba(31,72,94,.06);
+    display:flex;flex-direction:column;min-height:250px;
+  }
+  .topline{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .category{
+    display:inline-flex;align-items:center;
+    padding:6px 9px;border-radius:999px;
+    background:#e8f5fa;color:var(--primary-dark);
+    font-size:12px;font-weight:700;
+  }
+  .status{
+    font-size:12px;font-weight:700;
+    padding:6px 9px;border-radius:999px;
+    white-space:nowrap;
+  }
+  .online{background:#e8f6ef;color:var(--green)}
+  .soon{background:#fff2df;color:var(--orange)}
+  .archived{background:#eef1f3;color:var(--grey)}
+  .card h2{font-size:20px;margin:16px 0 8px}
+  .desc{color:var(--muted);line-height:1.55;font-size:14px;flex:1}
+  .date{font-size:12px;color:#8a9aa7;margin:14px 0}
+  .actions{display:flex;gap:9px}
+  .btn{
+    border:0;border-radius:11px;padding:11px 13px;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .open{background:var(--primary);color:#fff;flex:1}
+  .copy{background:#eef6fa;color:var(--primary-dark)}
+  .empty{
+    grid-column:1/-1;
+    text-align:center;background:#fff;border:1px dashed #b9cedb;
+    padding:45px;border-radius:18px;color:var(--muted);
+  }
+  .error{
+    background:#fff4f4;
+    color:#9a3030;
+    border:1px solid #efcaca;
+  }
+  footer{
+    text-align:center;color:#7b8d99;font-size:13px;padding:10px 20px 35px;
+  }
+  @media(max-width:900px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .toolbar{grid-template-columns:1fr 1fr}
+    .toolbar input{grid-column:1/-1}
+  }
+  @media(max-width:620px){
+    .grid{grid-template-columns:1fr}
+    .toolbar{grid-template-columns:1fr}
+    .toolbar input{grid-column:auto}
+    .actions{flex-direction:column}
+  }
+
+  .latest-wrap{
+    margin:22px 0 18px;
+  }
+  .latest-title{
+    font-size:14px;
+    font-weight:800;
+    color:var(--primary-dark);
+    margin:0 0 8px 2px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .latest-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffffff,#f2f8fb);
+    border:1px solid var(--line);
+    border-top:5px solid #54b8d3;
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+  }
+  .latest-card h2{
+    margin:5px 0 8px;
+    font-size:23px;
+  }
+  .latest-card p{
+    margin:0 0 14px;
+    color:var(--muted);
+  }
+  .latest-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:800;
+    background:#fff2d8;
+    color:#9a6200;
+  }
+
+  /* Code couleur par type de page */
+  .type-guides-pratiques{ border-top:5px solid #2e6dbf; }
+  .type-adhesion{ border-top:5px solid #379331; }
+  .type-communiques{ border-top:5px solid #f5a800; }
+  .type-evenements{ border-top:5px solid #a45dbd; }
+  .type-actualites{ border-top:5px solid #0b8f8f; }
+  .type-archives{ border-top:5px solid #7f8c98; }
+  .type-autres{ border-top:5px solid #54b8d3; }
+
+  .category.type-pill-guides-pratiques{background:#e9f0fb;color:#2e6dbf}
+  .category.type-pill-adhesion{background:#eaf5e5;color:#2f7f2a}
+  .category.type-pill-communiques{background:#fff3d8;color:#9a6200}
+  .category.type-pill-evenements{background:#f4eafb;color:#7c3f94}
+  .category.type-pill-actualites{background:#e5f6f6;color:#087070}
+  .category.type-pill-archives{background:#eef1f3;color:#66737d}
+  .category.type-pill-autres{background:#e8f5fa;color:#084f73}
+.latest-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffffff,#f2f8fb);
+    border:1px solid var(--line);
+    border-top:5px solid #54b8d3;
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+  }
+  .latest-content{min-width:0}
+
+  /* Différenciation visuelle renforcée par catégorie */
+  .card{
+    position:relative;
+    overflow:hidden;
+  }
+.type-guides-pratiques{background:linear-gradient(180deg,#f8fbff,#ffffff)}
+
+  .type-adhesion{background:linear-gradient(180deg,#f8fff5,#ffffff)}
+
+  .type-communiques{background:linear-gradient(180deg,#fffaf0,#ffffff)}
+
+  .type-evenements{background:linear-gradient(180deg,#fcf7ff,#ffffff)}
+
+  .type-actualites{background:linear-gradient(180deg,#f3ffff,#ffffff)}
+
+  .type-archives{background:linear-gradient(180deg,#f7f8f9,#ffffff)}
+
+  .type-autres{background:linear-gradient(180deg,#f5fbfd,#ffffff)}
+
+  .contact-box{
+    margin:28px 0 0;
+    background:#0e1f4a;
+    color:#fff;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .contact-box h2{
+    margin:0 0 6px;
+    font-size:20px;
+  }
+  .contact-box p{
+    margin:0;
+    opacity:.9;
+  }
+  .contact-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    background:#fff;
+    color:#0e1f4a;
+    border-radius:12px;
+    padding:12px 16px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .contact-link:hover{background:#eef5fa}
+
+
+  .card{border-left:1px solid var(--line) !important;}
+  .latest-card{border-left:1px solid var(--line) !important;}
+
+
+  .search-index-status{
+    margin-top:8px;
+    font-size:12px;
+    color:var(--muted);
+    text-align:right;
+  }
+
+  .portal-search{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin-bottom:28px;
+  }
+  .search-kicker{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:14px;
+    color:var(--text);
+  }
+  .search-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 190px;
+    gap:12px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:16px;
+    margin:0 2px 14px;
+  }
+  .section-head h2{
+    margin:2px 0 0;
+    font-size:24px;
+  }
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:12px;
+    font-weight:800;
+    color:var(--primary);
+  }
+
+  .category-section,.quick-section,.latest-section,.results-section{
+    margin:28px 0;
+  }
+
+  .category-tiles{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+  }
+  .category-tile{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    text-align:left;
+    cursor:pointer;
+    transition:.18s transform,.18s box-shadow;
+    box-shadow:0 4px 14px rgba(31,72,94,.05);
+  }
+  .category-tile:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+  }
+  .category-tile strong{
+    display:block;
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .category-tile span{
+    font-size:13px;
+    color:var(--muted);
+  }
+  .category-tile[data-cat="Guides pratiques"]{border-top:5px solid #2e6dbf}
+  .category-tile[data-cat="Adhésion"]{border-top:5px solid #379331}
+  .category-tile[data-cat="Communiqués"]{border-top:5px solid #f5a800}
+  .category-tile[data-cat="Événements"]{border-top:5px solid #a45dbd}
+  .category-tile[data-cat="Actualités"]{border-top:5px solid #0b8f8f}
+  .category-tile[data-cat="Archives"]{border-top:5px solid #7f8c98}
+
+  .quick-links{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+  }
+  .quick-link{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    text-decoration:none;
+    background:#0e1f4a;
+    color:#fff;
+    border-radius:16px;
+    padding:18px;
+  }
+  .quick-link small{
+    display:block;
+    opacity:.75;
+    margin-top:4px;
+  }
+  .quick-arrow{
+    font-size:22px;
+    opacity:.8;
+  }
+
+  .latest-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+  }
+  .latest-item{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 6px 18px rgba(31,72,94,.06);
+  }
+  .latest-item h3{
+    margin:12px 0 8px;
+    font-size:18px;
+  }
+  .latest-item p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+    min-height:42px;
+  }
+  .latest-meta{
+    font-size:12px;
+    color:#8797a4;
+    margin:10px 0 14px;
+  }
+
+  .ghost-btn{
+    border:1px solid #cbdce6;
+    background:#fff;
+    color:var(--primary-dark);
+    border-radius:11px;
+    padding:10px 13px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .total-count{
+    color:var(--muted);
+    font-size:14px;
+  }
+  .sort-select{
+    width:auto;
+    min-width:160px;
+  }
+  .results-section{
+    display:none;
+  }
+  .results-section.visible{
+    display:block;
+  }
+
+  @media(max-width:900px){
+    .category-tiles,.quick-links,.latest-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:620px){
+    .search-row{grid-template-columns:1fr}
+    .category-tiles,.quick-links,.latest-grid{grid-template-columns:1fr}
+    .section-head{align-items:flex-start;flex-direction:column}
+    .sort-select{width:100%}
+  }
+
+
+  .welcome-panel{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:24px;
+    display:grid;
+    grid-template-columns:minmax(0,.85fr) minmax(320px,1.15fr);
+    gap:24px;
+    align-items:center;
+    margin-bottom:28px;
+  }
+  .welcome-copy h2{
+    margin:4px 0 8px;
+    font-size:30px;
+  }
+  .welcome-copy p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.55;
+  }
+  .welcome-search input{
+    font-size:16px;
+    padding:15px 16px;
+    border-radius:14px;
+  }
+
+  .category-pills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .category-pill-btn{
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--text);
+    border-radius:999px;
+    padding:11px 16px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  .category-pill-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(31,72,94,.08);
+  }
+  .category-pill-btn .count{
+    font-weight:600;
+    opacity:.65;
+    margin-left:6px;
+  }
+
+  .category-pill-btn[data-cat="Guides pratiques"]{border-color:#b9cff0;color:#2e6dbf;background:#f7faff}
+  .category-pill-btn[data-cat="Adhésion"]{border-color:#bfdcb9;color:#379331;background:#f8fff5}
+  .category-pill-btn[data-cat="Communiqués"]{border-color:#f1d79c;color:#a66b00;background:#fffaf1}
+  .category-pill-btn[data-cat="Événements"]{border-color:#d9bce5;color:#8b4ca3;background:#fcf8ff}
+  .category-pill-btn[data-cat="Actualités"]{border-color:#b6dddd;color:#0b7d7d;background:#f5ffff}
+  .category-pill-btn[data-cat="Archives"]{border-color:#d0d6da;color:#68747e;background:#f8f9fa}
+
+  .latest-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+  }
+  .latest-item{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 5px 16px rgba(31,72,94,.05);
+  }
+  .latest-item h3{margin:12px 0 8px;font-size:18px}
+  .latest-item p{color:var(--muted);font-size:14px;line-height:1.5;min-height:42px}
+  .latest-meta{font-size:12px;color:#8797a4;margin:10px 0 14px}
+
+  .results-section{display:none;margin-top:30px}
+  .results-section.visible{display:block}
+  .sort-select{width:auto;min-width:160px}
+
+  @media(max-width:850px){
+    .welcome-panel{grid-template-columns:1fr}
+    .latest-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:620px){
+    .latest-grid{grid-template-columns:1fr}
+    .section-head{align-items:flex-start;flex-direction:column}
+    .sort-select{width:100%}
+  }
+
+
+  /* Résultats de recherche compacts, affichés juste sous la recherche */
+  .results-section.search-results{
+    margin-top:14px;
+    margin-bottom:28px;
+  }
+  .results-section.search-results .section-head{
+    margin-bottom:10px;
+  }
+  .grid.search-mode{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .search-result-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:18px;
+    align-items:center;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    box-shadow:0 3px 12px rgba(31,72,94,.05);
+  }
+  .search-result-main{min-width:0}
+  .search-result-top{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:5px;
+  }
+  .search-result-row h3{
+    margin:0;
+    font-size:17px;
+    color:var(--text);
+  }
+  .search-result-row p{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.45;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .search-result-row .btn{
+    min-width:120px;
+    white-space:nowrap;
+  }
+  @media(max-width:620px){
+    .search-result-row{grid-template-columns:1fr}
+    .search-result-row p{white-space:normal}
+    .search-result-row .btn{width:100%}
+  }
+
+
+  .type-fiches-pratiques{border-top:5px solid #0b8f8f;background:linear-gradient(180deg,#f3ffff,#ffffff)}
+  .category.type-pill-fiches-pratiques{background:#e5f6f6;color:#087070}
+  .category-pill-btn[data-cat="Fiches pratiques"]{border-color:#b6dddd;color:#0b7d7d;background:#f5ffff}
+  .category-tile[data-cat="Fiches pratiques"]{border-top:5px solid #0b8f8f}
+
+
+  .scope-switcher{margin:0 0 24px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px rgba(31,72,94,.06);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .scope-switcher strong{display:block;color:var(--primary-dark);margin-bottom:4px}
+  .scope-switcher span{font-size:13px;color:var(--muted)}
+  .scope-switcher select{width:auto;min-width:220px}
+  .scope-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#eef1f3;color:#596874;font-size:11px;font-weight:800}
+  @media(max-width:620px){.scope-switcher select{width:100%}}
+
+.hierarchy{margin:0 0 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}.hierarchy a{color:var(--primary-dark);font-weight:700}.child-portals{margin:24px 0}.child-portals h2{font-size:23px}.child-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.child-link{display:block;text-decoration:none;background:white;border:1px solid var(--line);border-top:4px solid #379331;border-radius:16px;padding:20px;color:var(--text);box-shadow:var(--shadow)}.child-link strong{display:block;font-size:20px;margin-bottom:8px}.child-link span{font-size:14px;color:#526b7d}.scope-switcher select{max-width:100%}input:focus-visible,select:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid #f5a800;outline-offset:3px}.logo-img{height:auto;object-fit:contain}@media(max-width:620px){.child-grid{grid-template-columns:1fr}.hierarchy{font-size:13px}}</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">
+      <div class="logo-wrap">
+        <img class="logo-img" src="https://cat-energies.github.io/assets/cat-energies/img/LOGO_OFFICIEL_CAT_ENERGIES.png" alt="Logo CAT Énergies">
+      </div>
+      <div>
+        <div class="brand-name">CAT Énergies — DPN</div>
+      </div>
+    </div>
+    <h1>Toutes vos communications en un seul endroit</h1>
+    <p class="subtitle">
+      Retrouvez rapidement vos guides, adhésions, communiqués et autres contenus.
+    </p>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,46 C230,95 430,10 700,51 C950,89 1160,24 1440,48 L1440,100 L0,100 Z" fill="#2e6dbf" opacity=".92"/>
+      <path d="M0,67 C250,28 455,103 720,65 C1010,24 1195,94 1440,58 L1440,100 L0,100 Z" fill="#379331" opacity=".90"/>
+      <path d="M0,78 C250,48 470,105 760,78 C1020,51 1225,91 1440,72 L1440,100 L0,100 Z" fill="#f4f8fb"/>
+    </svg>
+  </div>
+</header>
+
+
+
+<main class="container"><nav class="hierarchy" aria-label="Fil d’Ariane"><a href="/ieg/">IEG</a><span aria-hidden="true">›</span><a href="/edf/">EDF SA</a><span aria-hidden="true">›</span><strong aria-current="page">DPN</strong></nav>
+  <section class="scope-switcher" aria-label="Naviguer : IEG → entreprise → direction → site">
+    <div><strong>Naviguer : IEG → entreprise → direction → site</strong></div>
+    <select id="scopeSelect" aria-label="Choisir un périmètre"><option value="">Choisir un portail…</option></select>
+  </section>
+
+
+  <section class="child-portals"><h2>Accéder aux sites</h2><div class="child-grid"><a class="child-link" href="/edf/dpn/cattenom/index.html"><strong>Cattenom →</strong><span>Communications au périmètre Cattenom</span></a></div></section><section class="welcome-panel">
+    <div class="welcome-copy">
+      <div class="eyebrow">Portail CAT Énergies DPN</div>
+      <h2>Que recherchez-vous ?</h2>
+      <p>Recherchez un mot, un sujet ou une prestation dans l’ensemble de nos communications.</p>
+    </div>
+    <div class="welcome-search">
+      <input id="search" type="search" placeholder="🔎 Ex. vacances, logement, adhésion, RSS..." />
+      <div id="searchIndexStatus" class="search-index-status">Indexation du contenu des pages…</div>
+    </div>
+  </section>
+  <section id="resultsSection" class="results-section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Résultats</div>
+        <h2 id="resultsTitle">Toutes les communications</h2>
+      </div>
+      <select id="sortSelect" class="sort-select">
+        <option value="recent">Plus récentes</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+      </select>
+    </div>
+    <div id="cards" class="grid"></div>
+  </section>
+
+
+  <section class="category-section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Parcourir</div>
+        <h2>Catégories</h2>
+      </div>
+      <button id="showAllBtn" class="ghost-btn" type="button">Tout afficher</button>
+    </div>
+    <div id="categoryPills" class="category-pills"></div>
+  </section>
+
+  <section class="latest-section">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">À la une</div>
+        <h2>Derniers ajouts</h2>
+      </div>
+      <span id="totalCount" class="total-count"></span>
+    </div>
+    <div id="latestGrid" class="latest-grid">
+      <div class="empty">Chargement des dernières communications…</div>
+    </div>
+  </section>
+
+  <section class="contact-box">
+    <div>
+      <h2>Nous contacter</h2>
+      <p>Une question, une demande ou besoin d’un renseignement ? Écrivez-nous directement.</p>
+    </div>
+    <a class="contact-link" href="mailto:contact@cat-energies.fr">
+      ✉ Contact
+    </a>
+  </section>
+
+</main>
+
+
+
+<footer>
+  CAT Énergies DPN
+</footer>
+
+<script>
+let communications = [];
+let globalCommunications = [];
+let activeCategory = "";
+
+const cards = document.getElementById("cards");
+const search = document.getElementById("search");
+const sortSelect = document.getElementById("sortSelect");
+const categoryPills = document.getElementById("categoryPills");
+const latestGrid = document.getElementById("latestGrid");
+const totalCount = document.getElementById("totalCount");
+const resultsSection = document.getElementById("resultsSection");
+const resultsTitle = document.getElementById("resultsTitle");
+const showAllBtn = document.getElementById("showAllBtn");
+const searchIndexStatus = document.getElementById("searchIndexStatus");
+
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+  }[char]));
+}
+
+function normalizeSearchText(value){
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function parseDate(value){
+  if(!value) return new Date(0);
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? new Date(0) : d;
+}
+
+function formatDateISO(value){
+  const d = parseDate(value);
+  return d.getTime() === 0 ? "Non renseignée" : d.toLocaleDateString("fr-FR");
+}
+
+function categorySlug(value){
+  return String(value || "Autres")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"") || "autres";
+}
+
+function statusClass(status){
+  if(status === "En ligne") return "online";
+  if(status === "À venir") return "soon";
+  return "archived";
+}
+
+function extractPageText(htmlText){
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, "text/html");
+  doc.querySelectorAll("script, style, noscript, svg").forEach(el => el.remove());
+  return normalizeSearchText(
+    (doc.title || "") + " " + (doc.body ? doc.body.innerText : "")
+  ).replace(/\s+/g, " ").trim();
+}
+
+async function indexOnePage(item){
+  item._searchText = normalizeSearchText(
+    `${item.title || ""} ${item.description || ""} ${item.category || ""}`
+  );
+  if(!item.url) return false;
+
+  try{
+    const response = await fetch(item.url, { cache: "no-store" });
+    if(!response.ok) throw new Error("HTTP " + response.status);
+    item._searchText += " " + extractPageText(await response.text());
+    return true;
+  }catch(error){
+    console.warn("Impossible d’indexer :", item.url, error);
+    return false;
+  }
+}
+
+async function indexPageContents(){
+  if(searchIndexStatus) searchIndexStatus.textContent = "Indexation de la recherche transversale…";
+  const pool = globalCommunications.length ? globalCommunications : communications;
+  const results = await Promise.allSettled(pool.map(indexOnePage));
+  const ok = results.filter(r => r.status === "fulfilled" && r.value === true).length;
+  if(searchIndexStatus){ searchIndexStatus.textContent = ok + "/" + pool.length + " pages indexées tous périmètres confondus"; }
+  if(search.value.trim()) showResults();
+}
+
+function renderCategories(){
+  const counts = {};
+  communications.forEach(item => {
+    const cat = item.category || "Autres";
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+
+  categoryPills.innerHTML = Object.entries(counts)
+    .sort((a,b) => a[0].localeCompare(b[0], "fr"))
+    .map(([cat, qty]) => `
+      <button class="category-pill-btn" type="button" data-cat="${escapeHtml(cat)}">
+        ${escapeHtml(cat)}
+        <span class="count">${qty}</span>
+      </button>
+    `).join("");
+
+  categoryPills.querySelectorAll(".category-pill-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeCategory = btn.dataset.cat;
+      search.value = "";
+      showResults();
+    });
+  });
+}
+
+function renderLatest(){
+  const latest = [...communications]
+    .sort((a,b) => parseDate(b.updated || b.created) - parseDate(a.updated || a.created))
+    .slice(0,3);
+
+  latestGrid.innerHTML = latest.length ? latest.map(item => `
+    <article class="latest-item type-${categorySlug(item.category)}">
+      <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Autres")}</span>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.description || "")}</p>
+      <div class="latest-meta">Mis à jour le ${formatDateISO(item.updated || item.created)}</div>
+      <button class="btn open" data-url="${escapeHtml(item.url)}">Ouvrir la page</button>
+    </article>
+  `).join("") : '<div class="empty">Aucune communication publiée à ce périmètre pour le moment. Utilisez les accès ci-dessus ou la recherche pour consulter les autres périmètres.</div>';
+
+  latestGrid.querySelectorAll(".open").forEach(btn => {
+    btn.addEventListener("click", () => window.open(btn.dataset.url, "_blank", "noopener"));
+  });
+}
+
+function sortItems(items){
+  const mode = sortSelect.value;
+  return [...items].sort((a,b) => {
+    if(mode === "az") return (a.title || "").localeCompare(b.title || "", "fr");
+    if(mode === "za") return (b.title || "").localeCompare(a.title || "", "fr");
+    return parseDate(b.updated || b.created) - parseDate(a.updated || a.created);
+  });
+}
+
+function showResults(){
+  const rawQuery = search.value.trim();
+  const q = normalizeSearchText(rawQuery);
+
+  const sourceItems = q ? (globalCommunications.length ? globalCommunications : communications) : communications;
+  let filtered = sourceItems.filter(item => {
+    const haystack = item._searchText || normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||""));
+    return (!q || haystack.includes(q)) && (!activeCategory || item.category === activeCategory);
+  });
+
+  filtered = sortItems(filtered);
+  resultsSection.classList.add("visible");
+
+  const isSearch = Boolean(q) && !activeCategory;
+  resultsSection.classList.toggle("search-results", isSearch);
+  cards.classList.toggle("search-mode", isSearch);
+
+  if(activeCategory){
+    resultsTitle.textContent = activeCategory;
+  }else if(q){
+    resultsTitle.textContent = `${filtered.length} résultat${filtered.length > 1 ? "s" : ""} pour “${rawQuery}”`;
+  }else{
+    resultsTitle.textContent = "Toutes les communications";
+  }
+
+  if(!filtered.length){
+    cards.innerHTML = '<div class="empty">Aucune communication ne correspond à votre recherche.</div>';
+    return;
+  }
+
+  if(isSearch){
+    cards.innerHTML = filtered.map(item => `
+      <article class="search-result-row">
+        <div class="search-result-main">
+          <div class="search-result-top">
+            <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+            <span class="scope-badge">${escapeHtml(item.scope || "Périmètre non précisé")}</span>
+            <h3>${escapeHtml(item.title)}</h3>
+          </div>
+          <p>${escapeHtml(item.description || "")}</p>
+        </div>
+        <button class="btn open" data-url="${escapeHtml(item.url)}">Ouvrir</button>
+      </article>
+    `).join("");
+  }else{
+    cards.innerHTML = filtered.map(item => `
+      <article class="card type-${categorySlug(item.category)}">
+        <div class="topline">
+          <span class="category type-pill-${categorySlug(item.category)}">${escapeHtml(item.category || "Sans catégorie")}</span>
+          <span class="status ${statusClass(item.status)}">${escapeHtml(item.status || "")}</span>
+        </div>
+        <h2>${escapeHtml(item.title)}</h2>
+        <div class="desc">${escapeHtml(item.description || "")}</div>
+        <div class="date">Dernière mise à jour : ${formatDateISO(item.updated || item.created)}</div>
+        <div class="actions">
+          <button class="btn open" data-url="${escapeHtml(item.url)}">Ouvrir la page</button>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  cards.querySelectorAll(".open").forEach(btn => {
+    btn.addEventListener("click", () => window.open(btn.dataset.url, "_blank", "noopener"));
+  });
+}
+
+async function loadCommunications(){
+  try{
+    const response = await fetch("communications.json", { cache: "no-store" });
+    if(!response.ok) throw new Error("HTTP " + response.status);
+    communications = await response.json();
+    const registryResponse = await fetch("/portails.json", { cache: "no-store" });
+    const registry = registryResponse.ok ? await registryResponse.json() : [];
+    const scopeSelect = document.getElementById("scopeSelect");
+    if(scopeSelect){
+      registry.forEach(portal => {
+        const option = document.createElement("option");
+        option.value = portal.url;
+        const ancestors = []; let node = portal;
+        while(node){ ancestors.unshift(node.name); node = registry.find(p => p.id === node.parent_id); }
+        option.textContent = ancestors.join(" › ");
+        option.selected = portal.scope === "DPN";
+        scopeSelect.appendChild(option);
+      });
+      scopeSelect.addEventListener("change", () => { if(scopeSelect.value) window.location.href = scopeSelect.value; });
+    }
+    const globalLoaded = [];
+    for(const portal of registry){
+      try{
+        const r = await fetch(portal.communications, { cache: "no-store" });
+        if(!r.ok) continue;
+        const items = await r.json();
+        items.forEach(item => globalLoaded.push({ ...item, scope: item.scope || portal.scope }));
+      }catch(error){ console.info("Portail non indexé", portal.name, error); }
+    }
+    const seen = new Set();
+    globalCommunications = globalLoaded.filter(item => {
+      const key = item.url || ((item.scope || "") + "|" + (item.title || ""));
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    communications.forEach(item => { item._searchText = normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||"")); });
+    globalCommunications.forEach(item => { item._searchText = normalizeSearchText((item.title||"")+" "+(item.description||"")+" "+(item.category||"")+" "+(item.scope||"")); });
+    totalCount.textContent = communications.length + " communication" + (communications.length > 1 ? "s" : "");
+    renderCategories();
+    renderLatest();
+    indexPageContents();
+  }catch(error){
+    console.error(error);
+    latestGrid.innerHTML = '<div class="empty error">Impossible de charger communications.json.</div>';
+    if(searchIndexStatus) searchIndexStatus.textContent = "Erreur de chargement";
+  }
+}
+
+search.addEventListener("input", () => {
+  activeCategory = "";
+  if(search.value.trim()) showResults();
+  else resultsSection.classList.remove("visible");
+});
+
+sortSelect.addEventListener("change", showResults);
+
+showAllBtn.addEventListener("click", () => {
+  activeCategory = "";
+  search.value = "";
+  showResults();
+});
+
+loadCommunications();
+</script>
+
+<script data-goatcounter="https://cat-energies-cattenom.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
