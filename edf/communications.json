@@ -1,5 +1,16 @@
 [
   {
+    "title": "Guide EAP / EP 2026 — EDF SA",
+    "description": "Guide pratique CAT Énergies pour préparer les entretiens annuels de professionnalisation et les entretiens professionnels à EDF SA.",
+    "category": "Guides pratiques",
+    "scope": "EDF SA",
+    "status": "En ligne",
+    "date": "24/11/2026",
+    "url": "https://cat-energies.github.io/edf/guides/Guide%20EAP%20EP%20-%202026.html",
+    "created": "2026-11-24",
+    "updated": "2026-11-27"
+  },
+  {
     "title": "EPR2 — Communiqué CAT Énergies EDF SA",
     "description": "Communiqué CAT Énergies EDF SA consacré à l’EPR2.",
     "category": "Communiqués",
